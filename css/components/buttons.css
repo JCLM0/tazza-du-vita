@@ -1,0 +1,71 @@
+/* Landing Page Header Buttons */
+.landing-header .landing-navbar-btn-primary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 48px;
+    border-radius: var(--radius-xxl);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-lg);
+    cursor: pointer;
+    background-color: var(--main-green);
+    border: none;
+}
+
+.landing-header .landing-navbar-btn-secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 48px;
+    border-radius: var(--radius-xxl);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-lg);
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid var(--secondary-text);
+}
+
+/* Login and Register Buttons */
+.log-form-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: var(--radius-xxl);
+    background-color: var(--main-green);
+    color: var(--general-background);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    font-family: var(--font-primary);
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.log-form-btn-google {
+    width: 100%;
+    padding: 16px 12px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+
+    border: 1px solid var(--disabled-text);
+    border-radius: var(--radius-xxl);
+    background-color: var(--general-background);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.log-form-btn-google img {
+    width: 32px;
+    height: 32px;
+}
+
+.log-form span {
+    color: var(--secondary-text);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
+}

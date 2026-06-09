@@ -1,0 +1,65 @@
+/* Login and Register Forms */
+.log-form {
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+    padding: 0 20px;
+}
+
+/* Login and Register Inputs */
+.log-form-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 14px;
+    border: 1px solid var(--disabled-text);
+    border-radius: var(--radius-md);
+    margin-bottom: 8px;
+}
+
+.log-form-input label{
+    color: var(--secondary-text);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    margin-bottom: 4px;
+}
+
+.log-form-input input{
+    background: var(--general-background);
+    border: none;
+    outline: none;
+    color: var(--soft-text);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-regular);
+}
+
+.log-form-input input::placeholder{
+    color: var(--soft-text);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-regular);
+}
+
+/* Login and Register Texts */
+.log-form p {
+    color: var(--secondary-text);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-regular);
+}
+
+.log-form p a {
+    margin-left: 4px;
+    color: var(--main-green);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+}
+
+/* Form Divider*/
+.log-form .form-divider {
+    color: var(--optional-neutral-color-1);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
+    margin-top: 20px;
+}
