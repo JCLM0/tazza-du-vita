@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Panel de Administración | Tazza Du Vita</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="../css/base/style.css">
+    <link rel="stylesheet" href="../css/base/style.css">
+    <link rel="stylesheet" href="../css/utilities/variables.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/modal.css">
+    <link rel="stylesheet" href="../css/pages/admin-products.css">
+</head>
+<body class="admin-products-body">
+    <header class="admin-products-header">
+        <h1>Gestión de Productos</h1>
+        <a href="dashboard.html">
+            Volver al Dashboard
+        </a>
+    </header>
+    <main class="admin-products-main">
+        <div class="modal" id="productModal">
+            <section class="modal-form-section">
+                <h2 id="modalTitle">Registrar Producto</h2>
+                <form id="productForm">
+                    <input type="hidden" id="productId">
+
+                    <label for="productName">Nombre</label>
+                    <input type="text" id="productName" placeholder="Ingrese el nombre del producto" required>
+
+                    <label for="productCategory">Categoría</label>
+                    <input type="text" id="productCategory" placeholder="Ingrese la categoría del producto" required>
+
+                    <label for="productPrice">Precio</label>
+                    <input type="number" id="productPrice" placeholder="Ingrese el precio del producto" required>
+
+                    <label for="productStock">Stock</label>
+                    <input type="number" id="productStock" placeholder="Ingrese el stock del producto" required>
+
+                    <label for="productDescription">Descripción</label>
+                    <textarea id="productDescription" placeholder="Ingrese la descripción del producto" rows="4"></textarea>
+
+                    <button type="submit" class="agreement-btn" id="saveProductBtn">Guardar Producto</button>
+                    <button type="button" class="cancel-btn" id="closeModalBtn">Cancelar</button>
+                </form>
+            </section>
+        </div>
+        <h3>Listado de Productos Registrados, aqui pueden agregarse productos, editarlos y eliminarlos</h3>
+        <section class="admin-products-table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                </tbody>
+            </table>
+        </section>
+        <button class="btn-primary" id="openModalBtn">Agregar Producto</button>
+    </main>
+    <script src="js/admin-products.js"></script>
+</body>
+
+</html>

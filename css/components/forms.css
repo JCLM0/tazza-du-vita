@@ -58,7 +58,7 @@
 
 /* Form Divider*/
 .log-form .form-divider {
-    color: var(--optional-neutral-color-1);
+    color: var(--optional-neutral-color-2);
     font-size: var(--fs-md);
     font-weight: var(--fw-bold);
     margin-top: 20px;

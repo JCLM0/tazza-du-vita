@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Panel de Administración | Tazza Du Vita</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/base/style.css">
+    <link rel="stylesheet" href="../css/utilities/variables.css">
+    <link rel="stylesheet" href="../css/components/navbar.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/pages/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <nav class="dashboard-navbar">
+            <a href="../index.html"><img src="../assets/logos/white-logo.png" alt="Logo Tazza Du Vita"></a>
+        </nav>
+    </header>
+    <main class="dashboard-main">
+        <section class="dashboard-welcome">
+            <h2>Bienvenido al Panel de Administración</h2>
+            <p>
+                Desde este panel podrás administrar el contenido y los módulos de Tazza du Vitta.
+            </p>
+        </section>
+        <section class="dashboard-shortcuts">
+            <h2>Accesos rápidos</h2>
+            <div class="dashboard-shortcuts-container">
+                <button class="btn-primary" id="productsButton">
+                    Gestionar Productos
+                </button>
+                <button class="btn-primary coming-soon">
+                    Gestionar Usuarios
+                </button>
+                <button class="btn-primary coming-soon">
+                    Gestionar Pedidos
+                </button>
+                <button class="btn-primary coming-soon">
+                    Gestionar Pagos
+                </button>
+                <button class="btn-primary coming-soon">
+                    Gestionar Suscripciones
+                </button>
+            </div>
+        </section>
+        <section class="dashboard-summary">
+            <h2>Resumen del sistema</h2>
+            <div class="dashboard-summary-container">
+                <article class="dashboard-card dashboard-card-1">
+                    <h3>Productos</h3>
+                    <p>0</p>
+                </article>
+                <article class="dashboard-card dashboard-card-2">
+                    <h3>Usuarios</h3>
+                    <p>0</p>
+                </article>
+                <article class="dashboard-card dashboard-card-3">
+                    <h3>Pedidos</h3>
+                    <p>0</p>
+                </article>
+                <article class="dashboard-card dashboard-card-4">
+                    <h3>Suscripciones</h3>
+                    <p>0</p>
+                </article>
+            </div>
+        </section>
+        <section class="dashboard-activity">
+            <h2>Actividad reciente</h2>
+            <p>No existen actividades recientes.</p>
+        </section>
+    </main>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
