@@ -58,6 +58,16 @@
     font-weight: var(--fw-regular);
 }
 
+.modal-form-section select {
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--disabled-text);
+    background-color: transparent;
+    color: var(--soft-text);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-regular);
+}
+
 .modal-form-section textarea {
     padding: 12px 16px;
     border-radius: var(--radius-md);

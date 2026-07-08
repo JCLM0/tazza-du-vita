@@ -12,10 +12,10 @@
 
 
     <link rel="stylesheet" href="../css/base/style.css">
-    <link rel="stylesheet" href="../css/base/style.css">
     <link rel="stylesheet" href="../css/utilities/variables.css">
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/modal.css">
+    <link rel="stylesheet" href="../css/components/notifications.css">
     <link rel="stylesheet" href="../css/pages/admin-products.css">
 </head>
 <body class="admin-products-body">
@@ -33,16 +33,20 @@
                     <input type="hidden" id="productId">
 
                     <label for="productName">Nombre</label>
-                    <input type="text" id="productName" placeholder="Ingrese el nombre del producto" required>
-
+                    <input type="text" id="productName" placeholder="Ingrese el nombre del producto">
                     <label for="productCategory">Categoría</label>
-                    <input type="text" id="productCategory" placeholder="Ingrese la categoría del producto" required>
+                    <select name="productCategory" id="productCategory">
+                        <option value="null">Seleccione una categoría</option>
+                        <option value="plants">Plantas</option>
+                        <option value="coffee">Cafe</option>
+                        <option value="chocolate">Chocolate</option>
+                    </select>
 
                     <label for="productPrice">Precio</label>
-                    <input type="number" id="productPrice" placeholder="Ingrese el precio del producto" required>
+                    <input type="number" id="productPrice" placeholder="Ingrese el precio del producto">
 
                     <label for="productStock">Stock</label>
-                    <input type="number" id="productStock" placeholder="Ingrese el stock del producto" required>
+                    <input type="number" id="productStock" placeholder="Ingrese el stock del producto">
 
                     <label for="productDescription">Descripción</label>
                     <textarea id="productDescription" placeholder="Ingrese la descripción del producto" rows="4"></textarea>
@@ -70,7 +74,8 @@
         </section>
         <button class="btn-primary" id="openModalBtn">Agregar Producto</button>
     </main>
-    <script src="js/admin-products.js"></script>
+    <script src="../js/components/notifications.js"></script>
+    <script src="../js/admin/admin-products.js"></script>
 </body>
 
 </html>
