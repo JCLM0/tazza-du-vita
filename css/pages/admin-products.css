@@ -35,7 +35,7 @@
     gap: 8px;
 }
 
-.admin-products-main h3 {
+.admin-products-main h2 {
     font-size: var(--fs-xl);
     font-weight: var(--fw-regular);
     color: var(--soft-text);

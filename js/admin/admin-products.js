@@ -5,14 +5,14 @@
 // Clave utilizada para guardar la información en LocalStorage.
 const STORAGE_KEY = "tazzaProducts";
 
+// =============================================================
+// REFERENCIAS A ELEMENTOS DEL DOM
+// =============================================================
 // Formulario principal.
 const productForm = document.getElementById("productForm");
 
 // Cuerpo de la tabla.
 const productsTableBody = document.getElementById("productsTableBody");
-
-// Referencia al modal utilizado para registrar y editar productos
-const modal = document.getElementById("productModal");
 
 // Valores del formulario
 const productId = document.getElementById("productId");
@@ -21,6 +21,18 @@ const productCategory = document.getElementById("productCategory");
 const productPrice = document.getElementById("productPrice");
 const productStock = document.getElementById("productStock");
 const productDescription = document.getElementById("productDescription");
+
+//============================================================
+// REFERENCIAS A ELEMENTOS DEL MODAL
+//============================================================
+// Modal
+const modal = document.getElementById("productModal");
+
+// Titulo del modal
+const modalTitle = document.getElementById("modalTitle");
+
+// Boton de confirmar Modal
+const confirmModalBtn = document.getElementById("confirmModalBtn");
 
 // Botones para abrir y cerrar el modal
 const openModalBtn = document.getElementById("openModalBtn");
@@ -163,7 +175,7 @@ function saveProduct() {
     clearForm();
 
     // Cerramos el modal
-    modal.classList.remove("active");
+    closeModal();
 }
 
 
@@ -248,19 +260,16 @@ function editProduct(productID) {
     productStock.value = product.stock;
     productDescription.value = product.description;
 
-    // Abrimos el modal
-    document.getElementById("modalTitle").textContent = "Editar Producto";
-    modal.classList.add("active");
-
-    // Cambiamos el texto del boton
-    document.getElementById("saveProductBtn").textContent = "Actualizar Producto";
+    openModal();
 }
 
 
 // =============================================================
 // MOSTRAR PRODUCTOS
 // =============================================================
-// Muestra los productos agregandolos al cuerpo de la tabla
+/**
+*   Obtiene todos los productos registrados y los muestra en la tabla.
+*/
 function renderProducts() {
 
     // Llamamos a la funcion que obtiene los productos
@@ -272,7 +281,7 @@ function renderProducts() {
     // Iteramos todos los productos
     products.forEach(product => {
 
-        // Creamos una fila
+        // Creamos una fila nueva para el producto actual
         const row = document.createElement("tr");
 
         // Llenamos la fila
@@ -282,10 +291,10 @@ function renderProducts() {
             <td>$ ${product.price}</td>
             <td>${product.stock}</td>
             <td class="admin-products-table-action-btns">
-                <button class="edit-btn" onclick="editProduct('${product.id}')">
+                <button class="edit-btn" aria-label="Editar producto" title="Editar producto" onclick="editProduct('${product.id}')">
                     ✎
                 </button>
-                <button class="cancel-btn" onclick="deleteProduct('${product.id}')">
+                <button class="cancel-btn" aria-label="Eliminar producto" title="Eliminar producto" onclick="deleteProduct('${product.id}')">
                     🗑
                 </button>
             </td>
@@ -328,7 +337,8 @@ function saveProducts(products) {
         STORAGE_KEY,
         JSON.stringify(products)
     );
-    modal.classList.remove("active");
+
+    closeModal();
 }
 
 
@@ -337,20 +347,35 @@ function saveProducts(products) {
 // =============================================================
 
 // Funcion para abrir el modal
+function openModal(){
+    if (productId.value) {
+        modalTitle.textContent = "Editar Producto";
+        confirmModalBtn.textContent = "Actualizar Producto";
+    } else {
+        modalTitle.textContent = "Registrar Producto";
+        confirmModalBtn.textContent = "Guardar Producto";
+    }
+
+    modal.classList.add("active");
+};
+
 openModalBtn.addEventListener("click", () => {
     clearForm();
-    document.getElementById("modalTitle").textContent = "Registrar Producto";
-    modal.classList.add("active");
+    openModal();
 });
 
 // Funcion para cerrar el modal
-closeModalBtn.addEventListener("click", () => {
+function closeModal(){
     modal.classList.remove("active");
+};
+
+closeModalBtn.addEventListener("click", () => {
+    closeModal();
 });
 
 // Funcion para cerrar el modal al hacer click fuera
 modal.addEventListener("click", function(e){
     if(e.target === modal){
-        modal.classList.remove("active");
+        closeModal();
     }
 });

@@ -1,12 +1,12 @@
 /* El id se le coloca al contenedor que contiene las notificaciones */
 #notificationContainer{
     position: fixed;
-    top: 25px;
-    right: 25px;
+    top: 24px;
+    right: 24px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    z-index: 9999;
+    z-index: var(--z-notification);
 }
 
 /* Estilos de las notificaciones */
@@ -14,15 +14,15 @@
     min-width: 320px;
     max-width: 420px;
     padding: 16px 22px;
-    border-radius: 10px;
-    color: white;
-    font-weight: 600;
-    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    border-radius: var(--radius-md);
+    color: var(--primary-text);
+    font-weight: var(--fw-medium);
+    box-shadow: var(--shadow-md);
     opacity: 0;
     transform: translateX(100px);
     transition:
-        opacity .30s ease,
-        transform .30s ease;
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
 }
 
 /* Animaciones */
@@ -38,17 +38,17 @@
 
 /* Tipos */
 .notification.success{
-    background: #39D98A;
+    background: var(--success);
 }
 
 .notification.error{
-    background: #EF4444;
+    background: var(--error);
 }
 
 .notification.warning{
-    background: #F8CC5E;
+    background: var(--warning);
 }
 
 .notification.info{
-    background: #3B82F6;
+    background: var(--info);
 }

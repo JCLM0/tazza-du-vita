@@ -17,8 +17,8 @@
 
 .modal-form-section {
     background: var(--sections-background);
-    padding: 25px;
-    border-radius: 10px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-md);
     min-width: 500px;
     max-width: 90%;
 }
@@ -42,7 +42,9 @@
     font-weight: var(--fw-medium);
 }
 
-.modal-form-section input {
+.modal-form-section input,
+.modal-form-section select,
+.modal-form-section textarea {
     padding: 12px 16px;
     border-radius: var(--radius-md);
     border: 1px solid var(--disabled-text);
@@ -54,26 +56,6 @@
 
 .modal-form-section input::placeholder {
     color: var(--disabled-text);
-    font-size: var(--fs-md);
-    font-weight: var(--fw-regular);
-}
-
-.modal-form-section select {
-    padding: 12px 16px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--disabled-text);
-    background-color: transparent;
-    color: var(--soft-text);
-    font-size: var(--fs-md);
-    font-weight: var(--fw-regular);
-}
-
-.modal-form-section textarea {
-    padding: 12px 16px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--disabled-text);
-    background-color: transparent;
-    color: var(--soft-text);
     font-size: var(--fs-md);
     font-weight: var(--fw-regular);
 }

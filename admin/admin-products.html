@@ -33,9 +33,16 @@
                     <input type="hidden" id="productId">
 
                     <label for="productName">Nombre</label>
-                    <input type="text" id="productName" placeholder="Ingrese el nombre del producto">
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Ingrese el nombre del producto"
+                        maxlength="80"
+                        autocomplete="off"
+                        >
+
                     <label for="productCategory">Categoría</label>
-                    <select name="productCategory" id="productCategory">
+                    <select name="productCategory" id="productCategory" >
                         <option value="null">Seleccione una categoría</option>
                         <option value="plants">Plantas</option>
                         <option value="coffee">Cafe</option>
@@ -43,20 +50,36 @@
                     </select>
 
                     <label for="productPrice">Precio</label>
-                    <input type="number" id="productPrice" placeholder="Ingrese el precio del producto">
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="Ingrese el precio del producto"
+                        step="100"
+                        >
 
                     <label for="productStock">Stock</label>
-                    <input type="number" id="productStock" placeholder="Ingrese el stock del producto">
+                    <input
+                        type="number"
+                        id="productStock"
+                        placeholder="Ingrese el stock del producto"
+                        step="1"
+                        >
 
                     <label for="productDescription">Descripción</label>
-                    <textarea id="productDescription" placeholder="Ingrese la descripción del producto" rows="4"></textarea>
+                    <textarea
+                        id="productDescription"
+                        rows="4"
+                        placeholder="Ingrese la descripción del producto"
+                        minlength="10"
+                        maxlength="400"
+                        ></textarea>
 
-                    <button type="submit" class="agreement-btn" id="saveProductBtn">Guardar Producto</button>
+                    <button type="submit" class="confirm-btn" id="confirmModalBtn">Guardar Producto</button>
                     <button type="button" class="cancel-btn" id="closeModalBtn">Cancelar</button>
                 </form>
             </section>
         </div>
-        <h3>Listado de Productos Registrados, aqui pueden agregarse productos, editarlos y eliminarlos</h3>
+        <h2>Listado de Productos Registrados, aqui pueden agregarse productos, editarlos y eliminarlos</h2>
         <section class="admin-products-table-section">
             <table>
                 <thead>
@@ -72,7 +95,7 @@
                 </tbody>
             </table>
         </section>
-        <button class="btn-primary" id="openModalBtn">Agregar Producto</button>
+        <button class="primary-btn" id="openModalBtn">Agregar Producto</button>
     </main>
     <script src="../js/components/notifications.js"></script>
     <script src="../js/admin/admin-products.js"></script>
