@@ -1,0 +1,10 @@
+{
+    "name": "tazza-du-vita",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Aplicación web académica Tazza du Vita",
+    "type": "module",
+    "scripts": {
+        "test": "node tests/product-validation.test.mjs && node tests/product-storage.test.mjs"
+    }
+}
