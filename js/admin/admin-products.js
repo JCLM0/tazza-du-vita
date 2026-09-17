@@ -1,13 +1,23 @@
 // =============================================================
-// GESTION DE PRODUCTOS
+// IMPORTACIONES DE MODULOS
 // =============================================================
 
-// Clave utilizada para guardar la información en LocalStorage.
-const STORAGE_KEY = "tazzaProducts";
+import {
+    addProduct,
+    getProducts,
+    removeProduct,
+    updateProduct
+} from "../utils/product-storage.js";
+
+import { showNotification } from "../components/notifications.js";
+
+import { validateProductData } from "../utils/product-validation.js";
+
 
 // =============================================================
 // REFERENCIAS A ELEMENTOS DEL DOM
 // =============================================================
+
 // Formulario principal.
 const productForm = document.getElementById("productForm");
 
@@ -22,9 +32,11 @@ const productPrice = document.getElementById("productPrice");
 const productStock = document.getElementById("productStock");
 const productDescription = document.getElementById("productDescription");
 
+
 //============================================================
 // REFERENCIAS A ELEMENTOS DEL MODAL
 //============================================================
+
 // Modal
 const modal = document.getElementById("productModal");
 
@@ -39,6 +51,9 @@ const openModalBtn = document.getElementById("openModalBtn");
 const closeModalBtn = document.getElementById("closeModalBtn");
 
 
+//============================================================
+// INICIALIZACION DEL MODULO
+//============================================================
 
 // Cuando el documento termina de cargar, inicializa el modulo
 document.addEventListener("DOMContentLoaded", initializeModule);
@@ -48,83 +63,37 @@ function initializeModule() {
     renderProducts();
 }
 
+
+//============================================================
+// FORMULARIO
+//============================================================
+
 // Cuando el usuario envía el formulario evita que la pagina se recargue
-productForm.addEventListener("submit", function (event) {
+productForm.addEventListener("submit", event => {
     event.preventDefault();
 
-    if (!validateFormProduct()) {
+    // Validamos la informacion ingresada en el formulario
+    const validation = validateProductData({
+        name: productName.value,
+        category: productCategory.value,
+        price: productPrice.value,
+        stock: productStock.value,
+        description: productDescription.value
+    });
+
+    if (!validation.valid) {
+        showNotification(validation.message, "error");
+
+        const field = document.getElementById(
+            `product${validation.field.charAt(0).toUpperCase()}${validation.field.slice(1)}`
+        );
+
+        field?.focus();
         return;
     }
 
     saveProduct();
 });
-
-
-// =============================================================
-// VALIDACION DEL FORMULARIO
-// =============================================================
-// Valida la informacion ingresada en el formulario de productos
-function validateFormProduct() {
-
-    // Obtener y limpiar los valores del formulario
-    const name = productName.value.trim();
-    const category = productCategory.value.trim();
-    const price = Number(productPrice.value);
-    const stock = Number(productStock.value);
-    const description = productDescription.value.trim();
-
-    // Validar nombre
-    if (name === "") {
-        showNotification(
-            "Debe ingresar el nombre del producto.",
-            "error"
-        );
-        productName.focus();
-        return false;
-    }
-
-    // Validar categoría
-    if (category === "") {
-        showNotification(
-            "Debe seleccionar una categoría.",
-            "error"
-        );
-        productCategory.focus();
-        return false;
-    }
-
-    // Validar precio
-    if (isNaN(price) || price <= 0) {
-        showNotification(
-            "El precio debe ser mayor que cero.",
-            "error"
-        )
-        productPrice.focus();
-        return false;
-    }
-
-    // Validar stock
-    if (isNaN(stock) || stock < 0) {
-        showNotification(
-            "El stock no puede ser negativo.",
-            "error"
-        )
-        productStock.focus();
-        return false;
-    }
-
-    // Validar descripcion
-    if (description.length < 10) {
-        showNotification(
-            "La descripción debe tener al menos 10 caracteres.",
-            "error"
-        )
-        productDescription.focus();
-        return false;
-    }
-
-    return true;
-}
 
 
 // =============================================================
@@ -134,40 +103,30 @@ function validateFormProduct() {
 // dependiendo si el formulario contiene un ID
 function saveProduct() {
 
-    // Obtenemos todos los productos almacenados.
-    const products = getProducts();
-
     // Obtenemos el id oculto.
-    const productID = productId.value;
+    const existingID = productId.value;
 
     // Creamos un objeto producto.
     const product = {
-        id: productID || Date.now(),
+        id: existingID || Date.now(),
         name: productName.value,
         category: productCategory.value,
-        price: productPrice.value,
-        stock: productStock.value,
+        price: Number(productPrice.value),
+        stock: Number(productStock.value),
         description: productDescription.value
     };
 
     // Si existe un id significa que estamos editando.
-    if (productID) {
+    if (existingID) {
         updateProduct(product);
 
         // Mostramos notificación de éxito
-        showNotification(
-            "Producto actualizado correctamente.",
-            "success"
-        );
+        showNotification("Producto actualizado correctamente.", "success");
     } else {
-        products.push(product);
-        saveProducts(products);
+        addProduct(product);
 
         // Mostramos notificación de éxito
-        showNotification(
-            "Producto registrado correctamente.",
-            "success"
-        );
+        showNotification("Producto registrado correctamente.", "success");
     }
 
     // Llamamos a la funcion que muestra los productos y limpiamos el formulario
@@ -176,91 +135,6 @@ function saveProduct() {
 
     // Cerramos el modal
     closeModal();
-}
-
-
-// =============================================================
-// ACTUALIZAR PRODUCTOS
-// =============================================================
-// Recorre la lista de productos almacenados y reemplaza
-// unicamente el producto que coincide con el ID recibido.
-function updateProduct(updatedProduct) {
-
-    // Llamamos a la funcion que obtiene los productos.
-    let products = getProducts();
-    // Iteramos todos los productos.
-    products = products.map(product => {
-        if (String(product.id) === String(updatedProduct.id)) {
-            // Actualizamos el producto
-            return updatedProduct;
-        }
-        // Si no es el producto que queremos actualizar, lo devolvemos tal cual
-        return product;
-    });
-
-    // Guardamos los productos
-    saveProducts(products);
-}
-
-
-// =============================================================
-// ELIMINAR PRODUCTOS
-// =============================================================
-// Eliminando un porudcto usando su ID como referencia
-function deleteProduct(productId) {
-
-    // Confirmamos
-    const confirmation = confirm(
-        "¿Deseas eliminar este producto?"
-    );
-
-    // Si no confirma, no hacemos nada y volvemos a llamar la funcion que obtiene los productos
-    if (!confirmation) return;
-    let products = getProducts();
-
-    // Filtramos los productos
-    products = products.filter(product => {
-        // Devolvemos todos los productos menos el que queremos eliminar
-        return String(product.id) !== String(productId);
-    });
-
-    // Guardamos los productos y llamamos a la funcion que muestra los productos
-    saveProducts(products);
-    renderProducts();
-
-    // Mostramos notificacion de exito
-    showNotification("Producto eliminado correctamente.", "success");
-}
-
-
-// =============================================================
-// EDITAR PRODUCTOS
-// =============================================================
-// Obtiene la ID del producto que queremos editar
-// luego reemplaza los datos del producto en el formulario
-function editProduct(productID) {
-
-    // Llamamos a la funcion que obtiene los productos
-    const products = getProducts();
-
-    // Buscamos el producto
-    const product = products.find(product => {
-        // Buscamos el id del producto que queremos editar
-        return String(product.id) === String(productID);
-    });
-
-    // Si no encontramos el producto, no hacemos nada
-    if (!product) return;
-
-    // Llenamos el formulario con los datos nuevos
-    productId.value = product.id;
-    productName.value = product.name;
-    productCategory.value = product.category;
-    productPrice.value = product.price;
-    productStock.value = product.stock;
-    productDescription.value = product.description;
-
-    openModal();
 }
 
 
@@ -278,6 +152,18 @@ function renderProducts() {
     // Limpiamos la tabla
     productsTableBody.innerHTML = "";
 
+    // Si no hay productos, mostramos un mensaje
+    if (products.length === 0) {
+        productsTableBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty-state">
+                    No hay productos registrados todavía.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
     // Iteramos todos los productos
     products.forEach(product => {
 
@@ -286,16 +172,31 @@ function renderProducts() {
 
         // Llenamos la fila
         row.innerHTML = `
-            <td>${product.name}</td>
-            <td>${product.category}</td>
-            <td>$ ${product.price}</td>
+            <td>${escapeHtml(product.name)}</td>
+            <td>${escapeHtml(getCategoryName(product.category))}</td>
+            <td>$ ${formatPrice(product.price)}</td>
             <td>${product.stock}</td>
             <td class="admin-products-table-action-btns">
-                <button class="edit-btn" aria-label="Editar producto" title="Editar producto" onclick="editProduct('${product.id}')">
-                    ✎
+                <button
+                    class="edit-btn"
+                    type="button"
+                    data-action="edit"
+                    data-product-id="${product.id}"
+                    aria-label="Editar producto"
+                    title="Editar producto"
+                >
+                    Editar
                 </button>
-                <button class="cancel-btn" aria-label="Eliminar producto" title="Eliminar producto" onclick="deleteProduct('${product.id}')">
-                    🗑
+
+                <button
+                    class="cancel-btn"
+                    type="button"
+                    data-action="delete"
+                    data-product-id="${product.id}"
+                    aria-label="Eliminar producto"
+                    title="Eliminar producto"
+                >
+                    Eliminar
                 </button>
             </td>
         `;
@@ -304,6 +205,143 @@ function renderProducts() {
         productsTableBody.appendChild(row);
     });
 }
+
+productsTableBody.addEventListener("click", event => {
+
+    // Obtenemos el boton
+    const button = event.target.closest("button[data-action]");
+
+    // Si no hay boton, no hacemos nada
+    if (!button) {
+        return;
+    }
+
+    // Obtenemos el id
+    const productIdValue = button.dataset.productId;
+
+    // Si el boton es de edicion
+    if (button.dataset.action === "edit") {
+        // Abrimos el modal para editar productos
+        editProduct(productIdValue);
+    }
+
+    // Si el boton es de eliminacion
+    if (button.dataset.action === "delete") {
+        // Eliminamos el producto
+        deleteProduct(productIdValue);
+    }
+});
+
+
+// =============================================================
+// EDITAR PRODUCTOS
+// =============================================================
+// Obtiene la ID del producto que queremos editar
+// luego reemplaza los datos del producto en el formulario
+function editProduct(productIdValue) {
+
+    // Llamamos a la funcion que obtiene los productos y buscamos el producto
+    const product = getProducts().find(
+        // Buscamos el id del producto que queremos editar
+        item => String(item.id) === String(productIdValue)
+    );
+
+    // Si no encontramos el producto, no hacemos nada
+    if (!product) {
+        showNotification("No se encontró el producto seleccionado.", "error");
+        return;
+    };
+
+    // Llenamos el formulario con los datos nuevos
+    productId.value = product.id;
+    productName.value = product.name;
+    productCategory.value = product.category;
+    productPrice.value = product.price;
+    productStock.value = product.stock;
+    productDescription.value = product.description;
+
+    openModal();
+}
+
+
+// =============================================================
+// ELIMINAR PRODUCTOS
+// =============================================================
+// Eliminando un producto usando su ID como referencia
+function deleteProduct(productIdValue) {
+
+    // Filtramos los productos
+    const product = getProducts().find(
+        // Hasta encontrar el producto
+        item => String(item.id) === String(productIdValue)
+    );
+
+    // Si no encontramos el producto, no hacemos nada
+    if (!product) {
+        return;
+    }
+
+    // Confirmamos la eliminacion
+    const confirmation = confirm(
+        `Estas seguro que deseas eliminar este producto: "${product.name}"?`
+    )
+
+    // Si no confirma, no hacemos nada
+    if (!confirmation) {
+        return;
+    }
+
+    // Guardamos los productos y llamamos a la funcion que muestra los productos
+    removeProduct(productIdValue);
+    renderProducts();
+
+    // Mostramos notificacion de exito
+    showNotification("Producto eliminado correctamente.", "success");
+}
+
+
+// =============================================================
+// FUNCIONES DEL MODAL
+// =============================================================
+
+// Funcion para abrir el modal
+function openModal(){
+    // Verificamos si estamos editando
+    const isEditing = Boolean(productId.value);
+
+    // Cambiamos el titulo y el texto del boton
+    modalTitle.textContent = isEditing
+        ? "Editar Producto"
+        : "Registrar Producto";
+
+    confirmModalBtn.textContent = isEditing
+        ? "Actualizar Producto"
+        : "Guardar Producto";
+
+    modal.classList.add("active");
+}
+
+openModalBtn.addEventListener("click", () => {
+    clearForm();
+    openModal();
+});
+
+
+// Funcion para cerrar el modal
+function closeModal(){
+    modal.classList.remove("active");
+}
+
+closeModalBtn.addEventListener("click", () => {
+    closeModal();
+});
+
+// Funcion para cerrar el modal al hacer click fuera
+modal.addEventListener("click", event =>{
+    if(event.target === modal){
+        closeModal();
+    }
+});
 
 
 // =============================================================
@@ -317,65 +355,31 @@ function clearForm() {
 
 
 // =============================================================
-// LOCALSTORAGE
+// UTILIDADES
 // =============================================================
-// Obtiene todos los productos almacenados en la memoria del navegador
-function getProducts() {
-    return JSON.parse(
-        localStorage.getItem(STORAGE_KEY)
-    ) || [];
 
+// Formatea el precio
+function formatPrice(price) {
+    return Number(price).toLocaleString("es-CO");
 }
 
+// Obtiene el nombre de la categoria
+function getCategoryName(category) {
+    const categories = {
+        plants: "Plantas",
+        coffee: "Café",
+        chocolate: "Chocolate"
+    };
 
-// =============================================================
-// GUARDAR PRODUCTOS EN LOCALSTORAGE
-// =============================================================
-// Guarda los productos en la memoria del navegador (LocalStorage).
-function saveProducts(products) {
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(products)
-    );
-
-    closeModal();
+    return categories[category] ?? "Sin categoría";
 }
 
-
-// =============================================================
-// FUNCIONES DEL MODAL
-// =============================================================
-
-// Funcion para abrir el modal
-function openModal(){
-    if (productId.value) {
-        modalTitle.textContent = "Editar Producto";
-        confirmModalBtn.textContent = "Actualizar Producto";
-    } else {
-        modalTitle.textContent = "Registrar Producto";
-        confirmModalBtn.textContent = "Guardar Producto";
-    }
-
-    modal.classList.add("active");
-};
-
-openModalBtn.addEventListener("click", () => {
-    clearForm();
-    openModal();
-});
-
-// Funcion para cerrar el modal
-function closeModal(){
-    modal.classList.remove("active");
-};
-
-closeModalBtn.addEventListener("click", () => {
-    closeModal();
-});
-
-// Funcion para cerrar el modal al hacer click fuera
-modal.addEventListener("click", function(e){
-    if(e.target === modal){
-        closeModal();
-    }
-});
+// Escapa los caracteres especiales
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}

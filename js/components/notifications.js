@@ -6,7 +6,7 @@
  * Crea automáticamente el contenedor de notificaciones
  * si todavía no existe dentro del documento.
  */
-function createNotificationContainer() {
+export function createNotificationContainer() {
 
     // Verificamos si el contenedor ya existe
     let container = document.getElementById("notificationContainer");
@@ -24,12 +24,6 @@ function createNotificationContainer() {
     return container;
 }
 
-// Inicializa automáticamente el componente.
-document.addEventListener(
-    "DOMContentLoaded",
-    createNotificationContainer
-);
-
 /**
  * Muestra una notificación temporal en pantalla.
  *
@@ -37,7 +31,7 @@ document.addEventListener(
  * @param {string} type Tipo de notificación:
  * success | error | warning | info
  */
-function showNotification(message, type = "info") {
+export function showNotification(message, type = "info") {
 
     // Obtener el contenedor que contiene las notificaciones
     const container = createNotificationContainer();
@@ -49,18 +43,14 @@ function showNotification(message, type = "info") {
     const notification = document.createElement("div");
 
     // Agregar las clase general notification
-    notification.classList.add("notification");
-    // Agregar la clase correspondiente al tipo
-    notification.classList.add(type);
+    notification.classList.add("notification", type);
+    notification.setAttribute("role", type === "error" ? "alert" : "status");
 
     // Agregará el contenido de la notificacion dentro
     notification.textContent = message;
 
     // Agregar la notificación al contenedor
     container.appendChild(notification);
-
-    // Mostrar en consola para obtener información de lo que sucede
-    console.log(`[${type.toUpperCase()}] ${message}`);
 
     // Esperar un pequeño instante para activar la animación
     // Funciona de la siguiente manera
@@ -90,3 +80,6 @@ function showNotification(message, type = "info") {
 
     }, 3000);
 }
+
+// Inicializa automáticamente el componente.
+document.addEventListener("DOMContentLoaded", createNotificationContainer);

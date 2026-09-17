@@ -84,4 +84,11 @@
     align-items: center;
     gap: 8px;
     padding-right: 12px;
+    flex-wrap: wrap;
+}
+
+.empty-state {
+    padding: 32px 16px;
+    text-align: center;
+    color: var(--secondary-text);
 }

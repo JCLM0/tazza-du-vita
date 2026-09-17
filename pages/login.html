@@ -27,10 +27,10 @@
     <main class="login-main">
         <h1>Welcome Back !</h1>
         <h2>Log in to continue your journey with Tazza Du Vita</h2>
-        <form action="" class="log-form">
+        <form action="" class="log-form" id="loginForm">
             <div class="log-form-input">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Enter your email">
+                <input type="text" name="email" id="email" placeholder="Enter your username or email" autocomplete="username">
             </div>
             <div class="log-form-input">
                 <label for="password">Password</label>
@@ -45,5 +45,6 @@
             <p>Don't have an account? <a href="../pages/register.html">Sign Up</a></p>
         </form>
     </main>
+    <script type="module" src="../js/pages/login.js"></script>
 </body>
 </html>
