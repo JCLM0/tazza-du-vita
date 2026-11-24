@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Protocolo inicial, pendiente de validación mediante su aplicación práctica
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog; 02 — Procesos y Casos de Uso; 03 — Arquitectura Técnica; 04 — Modelo de Datos; 05 — Diseño de Interfaces; 06 — Estándares de Desarrollo; 07 — Implementación y Calidad
 **Responsable de las decisiones:** Responsable del proyecto
@@ -809,6 +810,12 @@ La autonomía podrá variar según el riesgo y las autorizaciones concedidas par
 
 Los cambios críticos conservarán los controles correspondientes.
 
+### 16.5. Estado para la primera asignación técnica
+
+El diagnóstico del repositorio ya se realizó sobre un ZIP de la copia local; detectó frontend recuperable, CRUD local, login provisional y ausencia de backend comercial. La documentación se actualizó con Node.js + Express, MySQL y reglas comerciales aprobadas. Antes de la primera tarea para Claude deberá comprobarse el estado del repositorio tras las correcciones locales de nomenclatura, registrar una línea base reproducible y entregar únicamente el contexto y los archivos necesarios.
+
+La primera tarea será limitada y verificable; no autoriza modificar por iniciativa propia las reglas comerciales, el modelo físico, la estrategia de autenticación ni dependencias críticas.
+
 ## 17. Trazabilidad y seguimiento
 
 ### 17.1. Identificadores
@@ -910,6 +917,7 @@ Este protocolo busca facilitar el trabajo y proteger la continuidad del proyecto
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Definición inicial de responsabilidades, colaboración, asignación de tareas, autorizaciones, revisión, integración y gestión de cambios. |
 
 **Próxima revisión prevista:** después de aplicar el protocolo en una primera tarea técnica y evaluar su funcionamiento.

@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Plan inicial de implementación y verificación, pendiente de diagnóstico del código actual
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog; 02 — Procesos y Casos de Uso; 03 — Arquitectura Técnica; 04 — Modelo de Datos; 05 — Diseño de Interfaces; 06 — Estándares de Desarrollo
 **Responsable de las decisiones:** Responsable del proyecto
@@ -182,6 +183,12 @@ Los bloques podrán desarrollarse parcialmente en paralelo cuando sus dependenci
 El bloque H es condicionado y no formará parte del alcance obligatorio mientras no se apruebe su implementación.
 
 El orden definitivo se establecerá después del diagnóstico técnico.
+
+### 4.1. Ajuste del plan tras diagnóstico y acuerdos comerciales
+
+La inspección del código recibido identificó CRUD de productos con persistencia local, catálogo y pruebas unitarias parciales, pero no un backend de comercio real, carrito, pedidos ni autenticación segura. Se prioriza conservar y adaptar el frontend, preparar Node.js + Express con MySQL, implementar sesiones y roles, trasladar el catálogo a persistencia central, carrito de visitante, reservas de stock, pedidos y gestión administrativa.
+
+El flujo de pagos alojados es la experiencia seleccionada, pero su integración efectiva permanece condicionada a seleccionar pasarela, confirmar viabilidad y disponer de tarifas de envío reales. No debe declararse pagado un pedido por una redirección de retorno. React y la reescritura total del frontend no son objetivos de V1.
 
 ## 5. Gestión de tareas
 
@@ -444,6 +451,19 @@ No representa pruebas ya ejecutadas.
 
 Esta matriz deberá complementarse con casos de prueba específicos después de revisar el código y resolver las reglas pendientes.
 
+### 10.1. Pruebas comerciales adicionales por especificar
+
+- Carrito anónimo, conservación y conciliación tras autenticación.
+- Productos agotados visibles sin compra; desactivados ocultos.
+- Reserva concurrente de stock y expiración segura; reembolso o reconciliación ante pago tardío.
+- Registro del pedido con instantánea de destinatario y entrega.
+- Cotización de envío obligatoria antes de habilitar pago.
+- Reintentos seguros del mismo pedido ante rechazo, sin doble cobro.
+- Seis estados comerciales y transiciones válidas.
+- Inmutabilidad de detalles/precios de pedidos pagados y actualización de guía y confirmación manual de entrega.
+
+No marcar estas pruebas como ejecutadas hasta contar con evidencias.
+
 ## 11. Gestión de defectos
 
 ### 11.1. Identificación
@@ -574,7 +594,7 @@ Antes de integrar una modificación importante deberá comprobarse:
 2. Qué comportamiento se esperaba cambiar.
 3. Qué pruebas se ejecutaron.
 4. Qué resultados se obtuvieron.
-5. Qué riesgos permanecen.
+5. Qué riesgos permanec.
 6. Si existe alguna decisión que requiera aprobación.
 
 ### 14.3. Cambios estructurales
@@ -728,6 +748,7 @@ Este documento servirá como referencia para organizar las actividades y verific
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Definición inicial de etapas, organización del trabajo, pruebas, defectos, riesgos, evidencias y criterios de finalización de la V1. |
 
 **Próxima revisión prevista:** después del diagnóstico del código actual y de la definición del plan de implementación.

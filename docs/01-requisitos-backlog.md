@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Especificación inicial de la V1, pendiente de contraste con el código actual
 **Documento de referencia:** 00 — Dirección del Proyecto
 **Responsable de las decisiones:** Responsable del proyecto
@@ -89,9 +90,9 @@ El documento 07 registrará las evidencias de implementación y verificación. N
 
 Persona que utiliza las funciones públicas de Tazza Du Vita sin haber iniciado sesión.
 
-Podrá consultar el catálogo, revisar productos y acceder a los formularios de registro e inicio de sesión.
+Podrá consultar el catálogo, revisar productos, gestionar un carrito temporal y acceder a los formularios de registro e inicio de sesión.
 
-El uso del carrito sin autenticación continúa pendiente de definición.
+Se ha aprobado el carrito de visitante sin autenticación; la persistencia y conciliación técnica siguen sujetas a diseño.
 
 ### 3.2. Cliente
 
@@ -193,7 +194,7 @@ Deberá calcular el resumen de compra utilizando los datos vigentes y las reglas
 
 No deberá aceptar cantidades inválidas ni permitir operaciones contrarias a las reglas de disponibilidad establecidas.
 
-El comportamiento del carrito para visitantes y su persistencia después del inicio de sesión permanecen pendientes de definición.
+El carrito para visitantes está aprobado. Al iniciar sesión se conservará y conciliará con el de la cuenta, con reglas técnicas de persistencia y combinación por definir.
 
 ### 4.4. Pedidos
 
@@ -437,7 +438,7 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 4. El sistema comunica si un producto no puede agregarse.
 5. No se aceptan cantidades inválidas.
 
-**Pendiente:** definir si esta operación también estará disponible para visitantes.
+**Decisión vigente:** esta operación también estará disponible para visitantes, con carrito temporal y validación antes del pedido.
 
 ### HU-2026-11-006 — Modificar el carrito
 
@@ -474,7 +475,7 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 7. Se informa claramente si el pedido se registró o si ocurrió un error.
 8. No se informa que el pedido está pagado sin una confirmación válida de pago.
 
-**Pendiente:** definir datos de entrega, estados y procedimiento de atención de pedidos.
+**Decisión vigente:** los datos mínimos de entrega y seis estados comerciales están aprobados. Quedan pendientes tarifas reales, transiciones excepcionales y conciliación con la pasarela.
 
 ### HU-2026-11-008 — Consultar mis pedidos
 
@@ -585,47 +586,19 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ## 7. Reglas de negocio iniciales
 
-Las siguientes reglas se derivan del alcance aprobado y deberán respetarse durante el diseño funcional y técnico.
+Las reglas de negocio oficiales (`RN-01` a `RN-12`, y sus ampliaciones aprobadas) se definen en el Documento 02. Se resumen a continuación únicamente los acuerdos comerciales que afectan los requisitos y criterios de aceptación.
 
-**RN-01 — Acceso administrativo**
+### 7.1. Reglas comerciales aprobadas (detalle oficial en Documento 02)
 
-Solo los usuarios autorizados podrán ejecutar operaciones administrativas.
+- **Visitantes:** catálogo y carrito públicos; iniciar la confirmación de compra requiere autenticación. El carrito temporal se conserva y concilia con el de la cuenta sin duplicaciones ni cantidades inválidas.
+- **Stock:** agregar al carrito no reserva; iniciar pago sobre un pedido válido crea reserva temporal y la venta se confirma únicamente tras verificar el pago. No puede haber sobreventa; el vencimiento y los pagos tardíos requieren conciliación segura.
+- **Pedidos:** estados comerciales aprobados: pendiente de pago, confirmado, en preparación, enviado, entregado y cancelado; el pago conserva su propio estado.
+- **Entrega:** a domicilio en Colombia sujeta a cobertura efectiva, dirección y contacto obligatorios y costo de envío conocido antes de permitir el pago.
+- **Reintentos:** un pago fallido puede reintentarse sobre el mismo pedido mientras corresponda, sin duplicar cargos.
+- **Administración:** no modifica artículos ni importes de pedidos pagados; confirma la entrega tras verificación con transportadora; gestiona cancelaciones solicitadas por contacto.
+- **Productos:** agotados visibles e inhabilitados para compra; desactivados no se muestran públicamente.
 
-**RN-02 — Validez de cantidades**
-
-Las cantidades utilizadas en operaciones comerciales deberán ser válidas y respetar las reglas de disponibilidad definidas.
-
-**RN-03 — Integridad de precios**
-
-El sistema deberá utilizar los precios correspondientes al momento de registrar el pedido y conservar la información histórica necesaria.
-
-Las modificaciones posteriores del precio de un producto no deberán alterar indebidamente el valor registrado en pedidos anteriores.
-
-**RN-04 — Integridad de pedidos**
-
-Un pedido deberá contener información suficiente para identificar sus productos, cantidades y valores comerciales.
-
-No se considerará registrado correctamente si falla una parte esencial de la operación de almacenamiento.
-
-**RN-05 — Separación de pedido y pago**
-
-Registrar un pedido no equivale a confirmar que ha sido pagado.
-
-El estado del pago deberá gestionarse de manera independiente cuando corresponda.
-
-**RN-06 — Protección de información**
-
-Los clientes únicamente podrán acceder a la información privada y a las operaciones para las que tengan autorización.
-
-**RN-07 — Conservación histórica**
-
-Las operaciones de mantenimiento del catálogo no deberán destruir la información necesaria para interpretar pedidos anteriores.
-
-**RN-08 — Validación confiable**
-
-Los valores y operaciones que afecten información comercial o permisos deberán validarse en los componentes seguros del sistema y no depender exclusivamente del navegador.
-
-Las reglas que requieran mayor detalle se desarrollarán en el Documento 02 — Procesos y Casos de Uso, y se reflejarán en el modelo de datos cuando corresponda.
+Las reglas `RN-01` a `RN-12` se desarrollan exclusivamente en el Documento 02; los resúmenes del presente documento no constituyen definiciones paralelas.
 
 ## 8. Product Backlog inicial
 
@@ -738,6 +711,18 @@ Depende del modelo de pedidos y de sus estados.
 No debe bloquear la implementación del flujo básico de pedidos.
 
 El orden definitivo se establecerá después de revisar las funcionalidades existentes y sus dependencias reales.
+
+### 9.6. Ajustes de aceptación tras decisiones comerciales
+
+**RF-2026-11-007 / HU-2026-11-005 y 006:** incluir pruebas del carrito de visitante, continuidad después de autenticación, combinación sin duplicar unidades y nueva validación de stock y precios.
+
+**RF-2026-11-008 / HU-2026-11-007:** capturar destinatario, teléfono, departamento, municipio y dirección; permitir datos adicionales opcionales; conservar la instantánea en el pedido; exigir cotización válida y total completo antes del pago. Registrar el pedido como pendiente de pago antes de enviar al proveedor.
+
+**RF-2026-11-011 / HU-2026-11-012:** permitir registrar transportadora, guía y transiciones autorizadas. Impedir alterar artículos y valores de pedidos pagados. Confirmación de entrega manual basada en evidencia de transportadora.
+
+**RF-2026-11-012 / HU-2026-11-013:** checkout alojado aceptado, retorno informativo, verificación servidor-servidor, reintentos seguros, manejo de operaciones pendientes y pagos tardíos. La construcción de la integración sigue condicionada a seleccionar proveedor y verificar viabilidad.
+
+**RF-2026-11-005 y 010:** productos con stock cero permanecen visibles como agotados y no comprables; productos desactivados dejan de publicarse.
 
 ## 10. Funcionalidades futuras
 
@@ -857,6 +842,7 @@ La documentación y la implementación deberán evolucionar de forma coordinada,
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Especificación inicial de requisitos, historias de usuario, criterios de aceptación y backlog de la V1. |
 
 **Próxima revisión prevista:** después del diagnóstico del código actual y conforme se resuelvan las decisiones pendientes que afecten el comportamiento de las funcionalidades.

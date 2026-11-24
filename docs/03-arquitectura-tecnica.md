@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Arquitectura objetivo inicial, pendiente de evaluación técnica y contraste con el código actual
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog; 02 — Procesos y Casos de Uso
 **Responsable de las decisiones:** Responsable del proyecto
@@ -236,7 +237,7 @@ La persistencia deberá conservar la información necesaria para las funciones d
 
 Se prevé utilizar una base de datos centralizada que permita gestionar relaciones, restricciones e integridad comercial.
 
-El motor definitivo está pendiente de selección.
+El motor relacional aprobado es MySQL; el esquema físico y la herramienta de acceso a datos siguen pendientes.
 
 El almacenamiento del navegador podrá seguir utilizándose para información temporal o preferencias de interfaz, cuando corresponda.
 
@@ -434,7 +435,7 @@ La validación del inventario deberá considerar que varios usuarios podrían in
 
 La comprobación visual de existencias en el frontend no garantizará por sí sola su disponibilidad al confirmar un pedido.
 
-La política de reserva y actualización del inventario está pendiente de definición.
+Está aprobada la reserva temporal al iniciar el pago de un pedido válido y la consolidación de venta tras confirmar el pago. Quedan pendientes los detalles de vencimiento, concurrencia, compensación y conciliación de pagos tardíos.
 
 La solución técnica deberá impedir resultados inconsistentes cuando se confirme la operación comercial.
 
@@ -547,18 +548,21 @@ Se procurará mantener nombres consistentes y evitar dependencias circulares o a
 
 La presencia de estas tecnologías deberá comprobarse nuevamente en el repositorio actualizado.
 
-### 12.2. Tecnologías no seleccionadas
+### 12.2. Tecnologías aprobadas y selecciones pendientes
 
 | Componente | Estado |
 |---|---|
-| Lenguaje y framework de backend | Pendiente |
-| Motor de base de datos | Pendiente |
-| Biblioteca de acceso a datos u ORM | Pendiente |
-| Mecanismo de autenticación | Pendiente |
+| Frontend | Mantener HTML, CSS y JavaScript modular; sin migración a React en V1 |
+| Backend | Node.js + Express aprobados |
+| Base de datos | MySQL aprobado |
+| Comunicación | API REST/JSON propuesta para contratos de la V1 |
+| Librería de acceso a datos / ORM | Pendiente |
+| Mecanismo concreto de sesiones y autenticación | Pendiente |
 | Proveedor de alojamiento | Pendiente |
-| Plataforma de despliegue | Pendiente |
-| Pasarela de pagos | Condicionada |
-| Herramientas de integración continua | Por verificar o definir |
+| Pasarela de pagos y métodos efectivos | Condicionada, proveedor pendiente |
+| Integración continua y herramientas de análisis | Por verificar o definir |
+
+Se preservará la separación presentación–servicios–persistencia, sin convertir el sistema en microservicios. React y Spring Boot no forman parte de la arquitectura seleccionada para la V1.
 
 ### 12.3. Criterios para seleccionar tecnologías
 
@@ -586,6 +590,12 @@ El Documento 00 registra como pendientes:
 - PEN-2026-11-008 — Pagos en línea.
 
 Las decisiones que resuelvan estos asuntos deberán registrarse antes de actualizar la arquitectura como aprobada.
+
+### 12.5. Decisiones técnicas posteriores al diagnóstico
+
+El frontend actual puede conservarse y completarse; la autenticación fija y LocalStorage como persistencia comercial serán reemplazados. El backend comprobará permisos, precios, disponibilidad y transacciones de pedido. La arquitectura deberá soportar carrito temporal de visitante, reserva de inventario transaccional, múltiples intentos de pago y consulta fiable del estado de pasarela.
+
+El motor de almacenamiento seleccionado es MySQL; el esquema SQL, las migraciones, la duración de reserva y la política ante pagos tardíos aún se diseñarán. No se seleccionó pasarela ni proveedor logístico.
 
 ## 13. Arquitectura de despliegue
 
@@ -811,6 +821,7 @@ El propósito de la arquitectura no será imponer una estructura teórica, sino 
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Definición inicial de principios, arquitectura lógica, responsabilidades, seguridad, persistencia y criterios técnicos de la V1. |
 
-**Próxima revisión prevista:** después del diagnóstico del código actual y la aprobación de las tecnologías principales.
+**Próxima revisión prevista:** precisar los contratos API, la autenticación, el esquema de datos y la política de reservas para Node.js + Express y MySQL.

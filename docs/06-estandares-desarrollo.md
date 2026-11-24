@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Estándares iniciales, pendientes de contraste con el código actual
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog; 02 — Procesos y Casos de Uso; 03 — Arquitectura Técnica; 04 — Modelo de Datos; 05 — Diseño de Interfaces
 **Responsable de las decisiones:** Responsable del proyecto
@@ -129,7 +130,7 @@ const loginForm = document.querySelector("#login-form");
 Se propone reservar `UPPER_SNAKE_CASE` para constantes de configuración o valores fijos relevantes.
 
 ```js
-const MAX_LOGIN_ATTEMPTS = 3;
+const MAX_ITEMS_PER_PAGE = 20;
 const DEFAULT_PAGE_SIZE = 20;
 ```
 
@@ -723,6 +724,12 @@ Las decisiones pendientes no impedirán continuar con la documentación.
 
 Deberán resolverse antes de realizar cambios extensos que dependan de ellas.
 
+### 15.1. Convenciones ratificadas tras revisión de código
+
+Se ratifican para el código nuevo: identificadores JavaScript y funciones en inglés con `camelCase`, clases `PascalCase`, archivos y clases/IDs HTML/CSS en `kebab-case`, y constantes de configuración en `UPPER_SNAKE_CASE` cuando corresponda. Estas reglas no justifican renombramientos masivos sin beneficio funcional.
+
+El responsable reportó correcciones de nomenclatura en su copia local y funcionamiento normal de la página; aún falta verificarlas mediante pruebas y el siguiente estado del repositorio. La selección tecnológica para V1 es Node.js + Express y MySQL. Convenciones específicas del backend y herramientas de calidad deberán definirse al configurarlos.
+
 ## 16. Relación con los demás documentos
 
 **Documento 00 — Dirección del Proyecto:** establece el alcance y las decisiones generales.
@@ -775,6 +782,7 @@ Estos estándares servirán como referencia común para el trabajo de programaci
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Definición inicial de convenciones, prácticas de programación, seguridad, control de versiones, pruebas y revisión de cambios. |
 
 **Próxima revisión prevista:** después del diagnóstico del código actual y de la selección de las tecnologías principales.

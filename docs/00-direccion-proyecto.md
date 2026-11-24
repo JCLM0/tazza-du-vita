@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Versión inicial de referencia
 **Responsable de las decisiones:** Responsable del proyecto
 
@@ -198,24 +199,46 @@ El identificador será permanente. Si una decisión cambia, se registrará una n
 
 Estas decisiones representan acuerdos generales. Los detalles técnicos se registrarán en sus documentos correspondientes.
 
+### 5.4. Decisiones adicionales aprobadas — 24/11/2026
+
+Las siguientes decisiones complementan las del registro inicial. Se conservan los identificadores originales sin reutilizarlos.
+
+| Identificador | Decisión | Estado |
+|---|---|---|
+| DEC-2026-11-010 | Backend con Node.js y Express; se conserva HTML, CSS y JavaScript modular en el frontend, sin migración a React durante la V1. | Aprobada |
+| DEC-2026-11-011 | Motor de persistencia relacional: MySQL. El esquema físico y las herramientas de acceso a datos siguen sujetos a diseño. | Aprobada |
+| DEC-2026-11-012 | Unificar Landing Page y Home en la página de inicio `index.html`, conservando el hero e incorporando secciones pertinentes. La eliminación de `pages/home.html` se verificará durante la implementación. | Aprobada |
+| DEC-2026-11-013 | Los visitantes podrán consultar y agregar al carrito; la autenticación se exigirá al iniciar la confirmación de compra, conservando y conciliando el carrito. | Aprobada |
+| DEC-2026-11-014 | Agregar al carrito no reserva stock; al crear el pedido e iniciar el pago se reservará temporalmente; la venta se consolidará tras verificar la aprobación del pago. | Aprobada |
+| DEC-2026-11-015 | Estados comerciales de pedido: pendiente de pago, confirmado, en preparación, enviado, entregado y cancelado. Los estados financieros se gestionarán por separado. | Aprobada |
+| DEC-2026-11-016 | Envíos a domicilio con cobertura comercial prevista en Colombia, sujetos a cobertura efectiva; sin punto de recogida en la V1. | Aprobada |
+| DEC-2026-11-017 | El costo de envío se calculará mediante tarifas configurables; sin tarifa/cotización real válida no se permitirá pagar. | Aprobada |
+| DEC-2026-11-018 | Pago externo alojado y retorno a Tazza Du Vita son aceptables; el resultado se verificará desde el backend. Se permiten reintentos seguros del mismo pedido. La integración real sigue condicionada. | Aprobada como diseño; integración condicionada |
+| DEC-2026-11-019 | Cancelaciones solicitadas mediante contacto con la empresa; entrega confirmada manualmente por administración tras verificar con transportadora. | Aprobada |
+| DEC-2026-11-020 | Los productos agotados permanecerán visibles, sin opción de compra; los desactivados se retirarán del catálogo público. | Aprobada |
+| DEC-2026-11-021 | No se podrán alterar artículos, cantidades, precios ni total de un pedido pagado; las incidencias se gestionarán conforme a las políticas comerciales y legales. | Aprobada |
+| DEC-2026-11-022 | Datos de entrega obligatorios: destinatario, teléfono, departamento, municipio y dirección; información adicional y segundo contacto opcionales; correo de la cuenta. Conservar instantánea histórica en el pedido. | Aprobada |
+
+El detalle de las reglas, sus excepciones y su implementación se mantiene en los documentos especializados. La aprobación del diseño del flujo de pagos **no** equivale a contratar o integrar una pasarela.
+
 ## 6. Asuntos pendientes de definición
 
 Las siguientes cuestiones no deben interpretarse como decisiones aprobadas.
 
 | Identificador | Asunto | Estado |
 |---|---|---|
-| PEN-2026-11-001 | Tecnología y estructura del backend | Pendiente |
-| PEN-2026-11-002 | Motor y diseño definitivo de la base de datos | Pendiente |
-| PEN-2026-11-003 | Carrito para visitantes y persistencia al iniciar sesión | Pendiente |
-| PEN-2026-11-004 | Datos obligatorios y estados de los pedidos | Pendiente |
-| PEN-2026-11-005 | Reglas de disponibilidad e inventario | Pendiente |
-| PEN-2026-11-006 | Gestión de direcciones y entregas | Pendiente |
+| PEN-2026-11-001 | Tecnología backend aprobada; falta diseño detallado de módulos y API | Parcialmente resuelto |
+| PEN-2026-11-002 | Motor MySQL aprobado; esquema físico y migraciones pendientes | Parcialmente resuelto |
+| PEN-2026-11-003 | Carrito de visitante aprobado; faltan reglas técnicas de conciliación y persistencia | Parcialmente resuelto |
+| PEN-2026-11-004 | Datos de entrega y seis estados aprobados; faltan transiciones y excepciones | Parcialmente resuelto |
+| PEN-2026-11-005 | Reserva temporal y visibilidad de agotados aprobadas; vencimiento y conciliación pendientes | Parcialmente resuelto |
+| PEN-2026-11-006 | Envíos nacionales y datos mínimos aprobados; tarifas reales, transportadoras y tiempos pendientes | Parcialmente resuelto |
 | PEN-2026-11-007 | Proveedor de alojamiento y despliegue | Pendiente |
 | PEN-2026-11-008 | Viabilidad e integración de pagos en línea | Pendiente |
 | PEN-2026-11-009 | Alcance de la consulta y edición del perfil de usuario | Pendiente |
 | PEN-2026-11-010 | Requisitos de facturación y obligaciones aplicables | Pendiente |
 
-Las alternativas técnicas que aparezcan en documentos anteriores, incluyendo MySQL, PostgreSQL, DigitalOcean, AWS u otras herramientas, deberán evaluarse antes de ser adoptadas.
+Las tecnologías principales de la V1 ya están aprobadas: Node.js con Express para el backend y MySQL para la persistencia. Las alternativas históricas que contradigan estas decisiones no se adoptarán sin registrar y aprobar formalmente un cambio. Los proveedores de alojamiento y demás servicios externos continúan pendientes de selección.
 
 No se elegirán tecnologías únicamente porque hayan sido mencionadas en una actividad académica anterior.
 
@@ -376,15 +399,17 @@ Comprende la revisión de la documentación histórica, la resolución de incons
 
 ### Etapa 2 — Diagnóstico del código actual
 
-**Estado:** Pendiente.
+**Estado:** Diagnóstico inicial realizado; verificación de la copia local pendiente.
 
-Comprende la inspección del código fuente actualizado, sus dependencias, funcionalidades, pruebas y organización.
+Se examinó una copia del repositorio y se identificaron las funcionalidades existentes, las principales limitaciones y los componentes reutilizables. Las correcciones locales posteriores, especialmente las de nomenclatura, deberán comprobarse antes de comenzar modificaciones estructurales.
 
-**Resultado esperado:** diagnóstico técnico y lista priorizada de cambios necesarios.
+**Resultado obtenido:** diagnóstico inicial del frontend y lista de funcionalidades pendientes.
+
+**Condición de cierre:** confirmar que la copia local de trabajo coincide con la línea base utilizada para planificar la implementación.
 
 ### Etapa 3 — Planificación de implementación
 
-**Estado:** Pendiente.
+**Estado:** En desarrollo.
 
 Comprende la definición de tareas, dependencias, tecnologías y criterios de aceptación necesarios para completar la V1.
 
@@ -407,6 +432,10 @@ Comprende las pruebas finales, corrección de defectos, revisión de requisitos 
 **Resultado esperado:** versión verificada y documentación correspondiente a las funcionalidades realmente completadas.
 
 Las etapas podrán solaparse cuando resulte conveniente, pero no deberán utilizarse para declarar completado trabajo que aún no haya sido verificado.
+
+### Actualización del plan tras el diagnóstico del repositorio
+
+Se revisó el ZIP del código actualizado. Se identificó frontend modular, CRUD de productos y pruebas limitadas, pero no un backend comercial ni persistencia centralizada. Se realizaron posteriormente correcciones de nomenclatura en el equipo del responsable, reportadas como funcionales, que requerirán verificación al integrar nuevos cambios. El siguiente trabajo es diseñar e implementar el backend, completar el flujo comercial y probarlo, sin reescribir el frontend por defecto.
 
 ## 11. Criterios generales de finalización de la V1
 
@@ -441,6 +470,7 @@ El propósito de esta documentación es facilitar el trabajo, mantener la cohere
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** después del diagnóstico del código actual, para actualizar las referencias a las tecnologías e implementaciones existentes.
+**Próxima revisión prevista:** después de verificar la copia local del repositorio y concretar el backlog técnico, los contratos API y las reglas pendientes de implementación.

@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Especificación inicial de interfaces, pendiente de contraste con el frontend actual
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog; 02 — Procesos y Casos de Uso; 03 — Arquitectura Técnica; 04 — Modelo de Datos
 **Responsable de las decisiones:** Responsable del proyecto
@@ -210,13 +211,9 @@ No se incluirán menús para funcionalidades que todavía no estén implementada
 
 ### 5.5. Landing Page y Home
 
-Los prototipos históricos presentan una Landing Page y una Home diferenciadas.
+Se aprobó unificar Landing Page y Home en una sola página denominada **Home**, conservando `index.html` como entrada principal. El hero reutilizará la función de presentación y llamada a explorar productos del landing anterior; debajo se incorporarán las secciones pertinentes previstas para Home, sujetas al alcance V1.
 
-No se ha aprobado mantener ambas como páginas independientes.
-
-Durante la revisión del frontend se evaluará si cumplen funciones suficientemente distintas o si conviene integrarlas en una sola página de inicio.
-
-La decisión deberá considerar la experiencia de navegación y el código ya desarrollado.
+`pages/home.html` podrá retirarse cuando se hayan trasladado sus contenidos útiles, actualizado enlaces y ejecutado pruebas de navegación. No debe eliminarse sin comprobar referencias.
 
 ## 6. Especificación de pantallas
 
@@ -790,6 +787,17 @@ Estos identificadores permitirán vincular las pantallas con requisitos y casos 
 
 Las interfaces representan responsabilidades visuales. Varias podrán combinarse dentro de una misma página si esto mejora el uso y mantenimiento del sistema.
 
+### 13.1. Interfaces y comportamiento comercial aprobados
+
+- **Carrito:** accesible a visitantes; el inicio del checkout requiere autenticación, conservando productos y conciliándolos con la cuenta.
+- **Catálogo:** mostrar etiqueta «Agotado» para productos sin stock, deshabilitando su compra; no mostrar desactivados.
+- **Checkout:** capturar nombre de destinatario, teléfono, departamento, municipio y dirección, con barrio/instrucciones/segundo teléfono opcionales. Presentar tarifa de envío real y total antes del pago; sin cotización válida, impedir avanzar.
+- **Pago:** checkout alojado y retorno permitidos, con estado pendiente hasta que el backend confirme el resultado; ofrecer reintento seguro del mismo pedido cuando proceda.
+- **Pedidos:** mostrar los seis estados comerciales aprobados y distinguirlos del estado financiero.
+- **Administración:** permitir indicar transportadora, guía y confirmación manual de entrega; impedir edición de artículos y totales pagados; cancelaciones por contacto con empresa.
+
+No se diseñará un selector que prometa medios de pago específicos hasta verificar las opciones del proveedor contratado.
+
 ## 14. Decisiones pendientes
 
 | Referencia | Asunto | Impacto en interfaces |
@@ -878,6 +886,7 @@ La finalidad de esta especificación es orientar el desarrollo de una experienci
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Definición inicial de identidad visual, navegación, interfaces, componentes, accesibilidad y criterios de interacción de la V1. |
 
 **Próxima revisión prevista:** después del diagnóstico del frontend actual y la resolución de las decisiones que afecten navegación, compra y administración.

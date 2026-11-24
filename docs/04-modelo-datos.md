@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Modelo conceptual y lógico preliminar, pendiente de aprobación y contraste con el código actual
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog; 02 — Procesos y Casos de Uso; 03 — Arquitectura Técnica
 **Responsable de las decisiones:** Responsable del proyecto
@@ -269,9 +270,25 @@ El tratamiento de pagos parciales, reembolsos y múltiples pagos aprobados se de
 
 No se implementará esta tabla únicamente para simular pagos.
 
+### 4.8. Información de entrega y reservas (ampliación aprobada)
+
+**Datos históricos de entrega del Pedido:** destinatario, teléfono, departamento, municipio, dirección y datos opcionales (barrio, instrucciones, segundo teléfono). El correo proviene de la cuenta, pero se evaluará conservar instantánea histórica cuando sea pertinente. No depender exclusivamente de un perfil mutable.
+
+**Cálculo de envío:** el pedido deberá conservar costo de envío cotizado y total confirmado; su cálculo utilizará reglas configurables y deberá estar validado antes de iniciar el pago. Las tarifas reales y transportadoras siguen pendientes.
+
+**Carrito de visitante:** existe antes de autenticar; después se concilia con el carrito de usuario. Se decidirá si un carrito anónimo se representa en el servidor o provisionalmente en navegador. La propuesta 1:1 Usuario–Carrito no se impone como cardinalidad definitiva.
+
+**Reservas de stock:** se requiere representar o garantizar temporalmente unidades reservadas por pedido o intento de pago, su vigencia y su liberación/consumo seguro. La forma física (tabla de reservas, atributos o transacciones) sigue sin decidirse. Nunca se deben generar disponibilidades negativas.
+
+**Producto:** diferenciar estado de publicación de disponibilidad por stock. Un producto agotado continúa visible y no comprable; uno desactivado no aparece en catálogo público.
+
+**Pedido:** sus estados comerciales aprobados son *pendiente de pago*, *confirmado*, *en preparación*, *enviado*, *entregado* y *cancelado*. La operativa de transporte podrá requerir transportadora y número de guía. Un pedido pagado no permite cambiar los detalles o precios históricos.
+
+**Pago:** el modelo comercial prevé varios intentos por pedido y reintentos seguros. Su implementación continúa condicionada a elegir proveedor; el retorno del navegador no prueba aprobación.
+
 ## 5. Relaciones y cardinalidades
 
-Las relaciones conceptuales iniciales se describen a continuación.
+Las relaciones conceptuales iniciales se describen a continuación. La tabla indica la relación general 1:N; el diagrama físico deberá expresar las participaciones mínimas y máximas en cada extremo (0..N, 1..1 o 1..N, según corresponda).
 
 | Relación | Cardinalidad propuesta | Interpretación |
 |---|---|---|
@@ -431,7 +448,7 @@ No se establecerá una regla automática hasta definir el proceso comercial.
 
 El estado del pedido deberá representar su situación dentro del proceso comercial.
 
-Se podrán evaluar estados como pendiente, confirmado, cancelado y completado, pero estos valores son propuestas y todavía no constituyen un catálogo aprobado.
+Los estados aprobados son pendiente de pago, confirmado, en preparación, enviado, entregado y cancelado. Las transiciones excepcionales y devoluciones requieren mayor detalle.
 
 ### 9.2. Estado del pago
 
@@ -453,11 +470,11 @@ Las transiciones se definirán en el Documento 02 y se implementarán mediante v
 
 La confirmación de pedidos podría requerir datos como destinatario, dirección, ciudad, teléfono de contacto y observaciones.
 
-Sin embargo, todavía no se ha definido si Tazza Du Vita utilizará envíos a domicilio, recogida u otras modalidades.
+Se aprobó la entrega a domicilio con cobertura comercial prevista en Colombia, sujeta a la disponibilidad real de las transportadoras; no habrá recogida presencial como opción en la V1.
 
 Por ese motivo, no se incorpora aún una entidad obligatoria de direcciones.
 
-Cuando se defina el procedimiento, deberá evaluarse si conviene guardar la dirección utilizada directamente como información histórica del pedido o mediante una estructura complementaria.
+Se conservará una instantánea histórica de los datos de entrega asociados al pedido. Queda pendiente decidir si el almacenamiento físico se realizará en el propio Pedido o en una entidad complementaria.
 
 No se deberá depender únicamente de una dirección editable del perfil para reconstruir una entrega pasada.
 
@@ -503,7 +520,7 @@ No se propone almacenar números completos de tarjetas, códigos de seguridad u 
 
 El diseño físico permanece pendiente.
 
-No se dispone todavía de una decisión aprobada sobre el motor de base de datos.
+Se ha aprobado **MySQL** como motor de base de datos. El esquema físico y sus migraciones siguen pendientes.
 
 ### 12.2. Elementos por definir
 
@@ -630,6 +647,7 @@ El objetivo no es reproducir automáticamente el SQL histórico, sino construir 
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Consolidación inicial del modelo conceptual y lógico de datos, entidades, relaciones, restricciones y decisiones pendientes de la V1. |
 
-**Próxima revisión prevista:** después de definir las reglas de carrito, pedidos, inventario y entrega, seleccionar el motor de base de datos y contrastar el modelo con el código actualizado.
+**Próxima revisión prevista:** diseñar y validar el esquema físico MySQL, los detalles de reserva de inventario y la persistencia del carrito de visitante.

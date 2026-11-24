@@ -2,8 +2,9 @@
 
 **Proyecto:** Tazza Du Vita
 **Tipo:** Aplicación web de comercio electrónico
-**Versión del documento:** 1.0
+**Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
+**Última actualización:** 24 de noviembre de 2026
 **Estado:** Especificación funcional inicial, pendiente de validación de procesos y contraste con el código actual
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog
 **Responsable de las decisiones:** Responsable del proyecto
@@ -91,7 +92,7 @@ Persona que accede a la aplicación sin iniciar sesión.
 
 Puede consultar el catálogo, revisar la información pública de los productos y utilizar los formularios de registro y autenticación.
 
-La posibilidad de agregar productos al carrito sin autenticarse permanece pendiente de definición.
+Los visitantes pueden agregar productos al carrito; la autenticación se exige al iniciar la confirmación de compra.
 
 ### 4.2. Cliente
 
@@ -130,8 +131,8 @@ El sistema no se representará como actor externo de sí mismo.
 | CU-2026-11-003 | Cerrar sesión | Usuario autenticado |
 | CU-2026-11-004 | Explorar catálogo | Visitante o cliente |
 | CU-2026-11-005 | Consultar producto | Visitante o cliente |
-| CU-2026-11-006 | Agregar producto al carrito | Cliente |
-| CU-2026-11-007 | Consultar y modificar carrito | Cliente |
+| CU-2026-11-006 | Agregar producto al carrito | Visitante o cliente |
+| CU-2026-11-007 | Consultar y modificar carrito | Visitante o cliente |
 | CU-2026-11-008 | Confirmar y registrar pedido | Cliente |
 | CU-2026-11-009 | Consultar mis pedidos | Cliente |
 | CU-2026-11-010 | Registrar producto | Administrador |
@@ -142,13 +143,13 @@ El sistema no se representará como actor externo de sí mismo.
 
 El caso CU-2026-11-014 permanece condicionado.
 
-Los casos relacionados con el carrito se describen inicialmente para clientes autenticados. Su posible extensión a visitantes no está aprobada.
+Los casos del carrito se aplican también a visitantes con un carrito temporal; solo la confirmación del pedido exige autenticación.
 
 ---
 
 ## 6. Casos de uso detallados
 
-## CU-2026-11-001 — Registrar cuenta
+### CU-2026-11-001 — Registrar cuenta
 
 **Objetivo:** permitir que un visitante cree una cuenta de cliente.
 
@@ -158,12 +159,12 @@ Los casos relacionados con el carrito se describen inicialmente para clientes au
 
 **Historia relacionada:** HU-2026-11-001.
 
-### Precondiciones
+#### Precondiciones
 
 - El visitante tiene acceso al formulario de registro.
 - El servicio necesario para registrar cuentas está disponible.
 
-### Flujo principal
+#### Flujo principal
 
 1. El visitante selecciona la opción de registro.
 2. El sistema presenta el formulario correspondiente.
@@ -175,7 +176,7 @@ Los casos relacionados con el carrito se describen inicialmente para clientes au
 8. El sistema registra la cuenta con los permisos correspondientes a un cliente.
 9. El sistema informa que el registro se realizó correctamente.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Datos incompletos o inválidos**
 
@@ -191,7 +192,7 @@ Si ocurre un fallo al registrar la cuenta, el sistema informa que la operación 
 
 No deberá comunicar un registro exitoso cuando no exista confirmación de almacenamiento.
 
-### Postcondiciones
+#### Postcondiciones
 
 - En caso de éxito, existe una cuenta registrada.
 - La cuenta dispone de los permisos de cliente.
@@ -201,7 +202,7 @@ No deberá comunicar un registro exitoso cuando no exista confirmación de almac
 
 El registro automático de una sesión después de crear la cuenta también requiere definición.
 
-## CU-2026-11-002 — Iniciar sesión
+### CU-2026-11-002 — Iniciar sesión
 
 **Objetivo:** permitir que un usuario registrado acceda a sus funciones autorizadas.
 
@@ -211,12 +212,12 @@ El registro automático de una sesión después de crear la cuenta también requ
 
 **Historia relacionada:** HU-2026-11-002.
 
-### Precondiciones
+#### Precondiciones
 
 - Existe una cuenta que puede utilizar el mecanismo de autenticación.
 - El usuario no dispone de una sesión válida para la operación que intenta iniciar.
 
-### Flujo principal
+#### Flujo principal
 
 1. El usuario accede al formulario de inicio de sesión.
 2. Introduce sus credenciales.
@@ -227,7 +228,7 @@ El registro automático de una sesión después de crear la cuenta también requ
 7. El sistema identifica los permisos correspondientes a la cuenta.
 8. El usuario obtiene acceso a las funciones autorizadas.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Credenciales incorrectas**
 
@@ -245,7 +246,7 @@ Si el modelo de usuarios contempla cuentas deshabilitadas, el sistema impide su 
 
 El sistema informa que no puede completar la operación y no presenta un inicio de sesión exitoso.
 
-### Postcondiciones
+#### Postcondiciones
 
 - En caso de éxito, existe una sesión autenticada válida.
 - El usuario solo puede ejecutar operaciones autorizadas.
@@ -253,7 +254,7 @@ El sistema informa que no puede completar la operación y no presenta un inicio 
 
 **Pendiente:** definir el comportamiento exacto de cuentas inactivas y la política de sesiones.
 
-## CU-2026-11-003 — Cerrar sesión
+### CU-2026-11-003 — Cerrar sesión
 
 **Objetivo:** finalizar una sesión autenticada.
 
@@ -263,11 +264,11 @@ El sistema informa que no puede completar la operación y no presenta un inicio 
 
 **Historia relacionada:** HU-2026-11-003.
 
-### Precondición
+#### Precondición
 
 El usuario dispone de una sesión autenticada.
 
-### Flujo principal
+#### Flujo principal
 
 1. El usuario selecciona la opción de cerrar sesión.
 2. El sistema procesa la solicitud.
@@ -275,17 +276,17 @@ El usuario dispone de una sesión autenticada.
 4. La interfaz se actualiza para representar el estado no autenticado.
 5. El usuario puede continuar utilizando las funciones públicas.
 
-### Excepción
+#### Excepción
 
 **E1 — Fallo al finalizar la sesión**
 
 Si no se confirma la invalidación de la sesión, la aplicación no deberá afirmar que la sesión quedó cerrada de manera segura.
 
-### Postcondición
+#### Postcondición
 
 La sesión anterior deja de autorizar operaciones protegidas.
 
-## CU-2026-11-004 — Explorar catálogo
+### CU-2026-11-004 — Explorar catálogo
 
 **Objetivo:** permitir la consulta de los productos ofrecidos.
 
@@ -295,11 +296,11 @@ La sesión anterior deja de autorizar operaciones protegidas.
 
 **Historia relacionada:** HU-2026-11-004.
 
-### Precondición
+#### Precondición
 
 El usuario puede acceder al área pública del catálogo.
 
-### Flujo principal
+#### Flujo principal
 
 1. El usuario accede al catálogo.
 2. El sistema obtiene los productos autorizados para su visualización pública.
@@ -307,7 +308,7 @@ El usuario puede acceder al área pública del catálogo.
 4. El usuario puede recorrer el contenido disponible.
 5. El usuario selecciona un producto si desea consultar información adicional.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Catálogo vacío**
 
@@ -317,13 +318,13 @@ El sistema presenta un mensaje apropiado e indica que no existen productos dispo
 
 El sistema muestra un aviso sin presentar información inexistente como si estuviera disponible.
 
-### Postcondición
+#### Postcondición
 
 El usuario puede consultar el catálogo sin necesidad de autenticarse.
 
 **Pendiente:** definir filtros, categorías, ordenamiento o búsqueda, si se consideran necesarios para la V1.
 
-## CU-2026-11-005 — Consultar producto
+### CU-2026-11-005 — Consultar producto
 
 **Objetivo:** permitir que el usuario examine la información de un producto.
 
@@ -333,11 +334,11 @@ El usuario puede consultar el catálogo sin necesidad de autenticarse.
 
 **Historia relacionada:** HU-2026-11-004.
 
-### Precondición
+#### Precondición
 
 El producto solicitado existe y está autorizado para consulta pública.
 
-### Flujo principal
+#### Flujo principal
 
 1. El usuario selecciona un producto.
 2. El sistema obtiene la información correspondiente.
@@ -345,7 +346,7 @@ El producto solicitado existe y está autorizado para consulta pública.
 4. Muestra su disponibilidad conforme a las reglas definidas.
 5. El usuario puede regresar al catálogo o iniciar una operación permitida sobre el producto.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Producto no disponible para compra**
 
@@ -355,29 +356,29 @@ El sistema informa su condición e impide las operaciones de compra que no esté
 
 El sistema presenta una respuesta apropiada y no ofrece una operación de compra inválida.
 
-### Postcondición
+#### Postcondición
 
 El usuario obtiene información suficiente para evaluar el producto.
 
-## CU-2026-11-006 — Agregar producto al carrito
+### CU-2026-11-006 — Agregar producto al carrito
 
 **Objetivo:** incorporar productos seleccionados al carrito.
 
-**Actor principal:** Cliente.
+**Actor principal:** Visitante o cliente.
 
 **Requisito relacionado:** RF-2026-11-007.
 
 **Historia relacionada:** HU-2026-11-005.
 
-### Precondiciones
+#### Precondiciones
 
-- El cliente dispone de una sesión válida.
+- El actor puede disponer de un carrito temporal (visitante) o asociado a la cuenta (cliente).
 - El producto existe y puede incorporarse al carrito.
 - La cantidad solicitada es válida.
 
-### Flujo principal
+#### Flujo principal
 
-1. El cliente selecciona un producto.
+1. El usuario selecciona un producto.
 2. Indica la cantidad deseada o acepta la cantidad inicial presentada.
 3. Solicita agregar el producto.
 4. El sistema valida la solicitud.
@@ -386,7 +387,7 @@ El usuario obtiene información suficiente para evaluar el producto.
 7. Actualiza el resumen correspondiente.
 8. Informa que la operación se completó correctamente.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Producto ya existente en el carrito**
 
@@ -406,7 +407,7 @@ El sistema impide aceptar una cantidad que contradiga las reglas de disponibilid
 
 No se comunica una actualización exitosa si la operación no se completa.
 
-### Postcondición
+#### Postcondición
 
 El carrito refleja únicamente los cambios aceptados.
 
@@ -414,32 +415,32 @@ El carrito refleja únicamente los cambios aceptados.
 
 No se asume que agregar un producto al carrito reserve automáticamente existencias.
 
-## CU-2026-11-007 — Consultar y modificar carrito
+### CU-2026-11-007 — Consultar y modificar carrito
 
-**Objetivo:** permitir que el cliente revise y ajuste los productos seleccionados.
+**Objetivo:** permitir que el visitante o cliente revise y ajuste los productos seleccionados.
 
-**Actor principal:** Cliente.
+**Actor principal:** Visitante o cliente.
 
 **Requisito relacionado:** RF-2026-11-007.
 
 **Historia relacionada:** HU-2026-11-006.
 
-### Precondición
+#### Precondición
 
-El cliente puede acceder a su carrito.
+El visitante o cliente puede acceder a su carrito.
 
-### Flujo principal
+#### Flujo principal
 
-1. El cliente abre el carrito.
+1. El usuario abre el carrito.
 2. El sistema presenta los productos registrados.
 3. Muestra las cantidades, precios y valores calculados.
-4. El cliente puede modificar una cantidad o retirar un artículo.
+4. El usuario puede modificar una cantidad o retirar un artículo.
 5. El sistema valida la operación solicitada.
 6. Si es válida, actualiza el contenido.
 7. El sistema recalcula el resumen de compra.
-8. El cliente puede continuar explorando productos o iniciar la confirmación del pedido.
+8. El usuario puede continuar explorando productos o iniciar la confirmación del pedido; para confirmar se requiere autenticación.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Carrito vacío**
 
@@ -457,13 +458,13 @@ El sistema informa el cambio y aplica la política de disponibilidad definida.
 
 Se informa que la operación no se completó.
 
-### Postcondición
+#### Postcondición
 
 El carrito y su resumen representan los cambios válidos que fueron aceptados.
 
 **Pendiente:** definir cuándo se actualizan los precios del carrito y cómo se resuelven cambios de precio antes de confirmar un pedido.
 
-## CU-2026-11-008 — Confirmar y registrar pedido
+### CU-2026-11-008 — Confirmar y registrar pedido
 
 **Objetivo:** convertir una selección válida de productos en un pedido registrado.
 
@@ -473,13 +474,13 @@ El carrito y su resumen representan los cambios válidos que fueron aceptados.
 
 **Historia relacionada:** HU-2026-11-007.
 
-### Precondiciones
+#### Precondiciones
 
 - El cliente está autenticado.
 - El carrito contiene al menos un producto válido.
 - El sistema dispone de la información necesaria para intentar registrar el pedido.
 
-### Flujo principal
+#### Flujo principal
 
 1. El cliente inicia el proceso de confirmación.
 2. El sistema presenta un resumen del carrito.
@@ -493,7 +494,7 @@ El carrito y su resumen representan los cambios válidos que fueron aceptados.
 10. Establece su estado inicial conforme a las reglas aprobadas.
 11. Informa que el pedido fue registrado y presenta su referencia.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Datos incompletos**
 
@@ -521,7 +522,7 @@ Si el cliente repite la solicitud debido a una demora o error de conexión, el s
 
 El mecanismo técnico se determinará en la arquitectura.
 
-### Postcondiciones
+#### Postcondiciones
 
 En caso de éxito:
 
@@ -536,7 +537,7 @@ El pedido no se considera pagado por el simple hecho de haber sido creado.
 
 El tratamiento posterior del carrito, la reserva o reducción del inventario y el procedimiento de entrega se definirán antes de completar la implementación.
 
-## CU-2026-11-009 — Consultar mis pedidos
+### CU-2026-11-009 — Consultar mis pedidos
 
 **Objetivo:** permitir al cliente consultar su historial de pedidos.
 
@@ -546,11 +547,11 @@ El tratamiento posterior del carrito, la reserva o reducción del inventario y e
 
 **Historia relacionada:** HU-2026-11-008.
 
-### Precondición
+#### Precondición
 
 El cliente dispone de una sesión autenticada.
 
-### Flujo principal
+#### Flujo principal
 
 1. El cliente accede a la sección de pedidos.
 2. El sistema identifica su cuenta.
@@ -559,7 +560,7 @@ El cliente dispone de una sesión autenticada.
 5. El cliente selecciona uno.
 6. El sistema muestra los detalles y su estado correspondiente.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Sin pedidos registrados**
 
@@ -573,11 +574,11 @@ Si se solicita un pedido que no pertenece al cliente, el sistema impide su consu
 
 El sistema informa que no pudo mostrar la información solicitada.
 
-### Postcondición
+#### Postcondición
 
 El cliente consulta únicamente la información autorizada de sus pedidos.
 
-## CU-2026-11-010 — Registrar producto
+### CU-2026-11-010 — Registrar producto
 
 **Objetivo:** permitir que un administrador agregue un producto al catálogo.
 
@@ -587,12 +588,12 @@ El cliente consulta únicamente la información autorizada de sus pedidos.
 
 **Historia relacionada:** HU-2026-11-009.
 
-### Precondiciones
+#### Precondiciones
 
 - El administrador dispone de una sesión válida.
 - Tiene autorización para gestionar productos.
 
-### Flujo principal
+#### Flujo principal
 
 1. El administrador accede al área de productos.
 2. Selecciona la opción de registrar un producto.
@@ -604,7 +605,7 @@ El cliente consulta únicamente la información autorizada de sus pedidos.
 8. Informa que el registro se realizó correctamente.
 9. El producto queda disponible para administración y para publicación cuando cumpla las reglas correspondientes.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Datos inválidos**
 
@@ -622,11 +623,11 @@ El sistema impide el registro.
 
 El sistema informa que no pudo completar la operación.
 
-### Postcondición
+#### Postcondición
 
 El producto queda registrado si la operación se completó correctamente.
 
-## CU-2026-11-011 — Modificar producto
+### CU-2026-11-011 — Modificar producto
 
 **Objetivo:** actualizar la información de un producto existente.
 
@@ -636,12 +637,12 @@ El producto queda registrado si la operación se completó correctamente.
 
 **Historia relacionada:** HU-2026-11-010.
 
-### Precondiciones
+#### Precondiciones
 
 - El administrador tiene los permisos necesarios.
 - El producto existe.
 
-### Flujo principal
+#### Flujo principal
 
 1. El administrador consulta la lista de productos.
 2. Selecciona el producto que desea editar.
@@ -652,7 +653,7 @@ El producto queda registrado si la operación se completó correctamente.
 7. Actualiza el registro.
 8. Informa que la operación se completó.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Datos incorrectos**
 
@@ -670,13 +671,13 @@ El sistema comunica el fallo y no informa una modificación exitosa.
 
 El sistema impide la operación.
 
-### Postcondición
+#### Postcondición
 
 La información vigente del producto refleja los cambios aceptados.
 
 Los cambios de precio o descripción no deberán alterar indebidamente los registros históricos de pedidos.
 
-## CU-2026-11-012 — Retirar producto de la oferta
+### CU-2026-11-012 — Retirar producto de la oferta
 
 **Objetivo:** permitir retirar un producto que no debe seguir ofreciéndose para nuevas compras.
 
@@ -686,12 +687,12 @@ Los cambios de precio o descripción no deberán alterar indebidamente los regis
 
 **Historia relacionada:** HU-2026-11-011.
 
-### Precondiciones
+#### Precondiciones
 
 - El administrador está autorizado.
 - El producto existe y puede gestionarse.
 
-### Flujo principal
+#### Flujo principal
 
 1. El administrador localiza el producto.
 2. Selecciona la opción para retirarlo.
@@ -702,7 +703,7 @@ Los cambios de precio o descripción no deberán alterar indebidamente los regis
 7. El producto deja de ofrecerse para nuevas compras.
 8. El sistema informa el resultado.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Operación cancelada**
 
@@ -720,7 +721,7 @@ El sistema comunica el fallo y mantiene un estado consistente.
 
 La operación se rechaza.
 
-### Postcondición
+#### Postcondición
 
 El producto deja de estar disponible para nuevas compras conforme a la política adoptada.
 
@@ -728,7 +729,7 @@ El producto deja de estar disponible para nuevas compras conforme a la política
 
 No se establece como requisito eliminar físicamente los registros.
 
-## CU-2026-11-013 — Consultar y gestionar pedidos
+### CU-2026-11-013 — Consultar y gestionar pedidos
 
 **Objetivo:** permitir que un administrador supervise y actualice las operaciones comerciales autorizadas.
 
@@ -738,12 +739,12 @@ No se establece como requisito eliminar físicamente los registros.
 
 **Historia relacionada:** HU-2026-11-012.
 
-### Precondiciones
+#### Precondiciones
 
 - El administrador está autenticado.
 - Tiene permisos para consultar y gestionar pedidos.
 
-### Flujo principal
+#### Flujo principal
 
 1. El administrador accede al área de pedidos.
 2. El sistema presenta los pedidos disponibles para administración.
@@ -754,7 +755,7 @@ No se establece como requisito eliminar físicamente los registros.
 7. Si la operación es válida, registra el cambio.
 8. El sistema informa el resultado y presenta el estado actualizado.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — No existen pedidos**
 
@@ -780,13 +781,13 @@ El sistema informa que no fue posible completar el cambio.
 
 El sistema rechaza la operación.
 
-### Postcondición
+#### Postcondición
 
 Los cambios permitidos quedan registrados y el pedido mantiene un estado coherente.
 
 **Pendiente:** establecer los estados y las transiciones autorizadas.
 
-## CU-2026-11-014 — Realizar pago en línea
+### CU-2026-11-014 — Realizar pago en línea
 
 **Clasificación:** Condicionado.
 
@@ -800,13 +801,13 @@ Los cambios permitidos quedan registrados y el pedido mantiene un estado coheren
 
 **Historia relacionada:** HU-2026-11-013.
 
-### Precondiciones
+#### Precondiciones
 
 - La integración de pagos ha sido aprobada.
 - Existe un pedido válido para el proceso.
 - Se ha establecido un proveedor de pagos y su mecanismo de integración.
 
-### Flujo principal propuesto
+#### Flujo principal propuesto
 
 1. El cliente selecciona la opción de pago.
 2. El sistema identifica el pedido y el importe correspondiente.
@@ -818,7 +819,7 @@ Los cambios permitidos quedan registrados y el pedido mantiene un estado coheren
 8. Mantiene la información del pedido coherente con la transacción.
 9. Presenta al cliente la información correspondiente.
 
-### Flujos alternativos y excepciones
+#### Flujos alternativos y excepciones
 
 **A1 — Pago rechazado**
 
@@ -840,15 +841,13 @@ El sistema evita procesar repetidamente el mismo resultado de manera inconsisten
 
 La aplicación no da por aprobado un pago sin verificación suficiente.
 
-### Postcondiciones
+#### Postcondiciones
 
 El pago conserva un estado verificable y el pedido mantiene una relación coherente con el resultado.
 
 **Pendiente:** definir proveedor, métodos de pago, estados, conciliación y tratamiento de reembolsos o cancelaciones cuando correspondan.
 
 Este caso de uso no será obligatorio para declarar completada la V1 si la integración no se aprueba.
-
----
 
 ## 7. Procesos generales del sistema
 
@@ -1005,6 +1004,24 @@ La disponibilidad pública de un producto deberá responder a reglas definidas.
 
 Retirar un producto de la oferta no deberá comprometer la información histórica de las compras.
 
+### 8.1. Reglas comerciales complementarias aprobadas
+
+**RN-13 — Carrito del visitante:** consulta y adición sin registro; al autenticarse se conserva y concilia con el carrito de la cuenta, recalculando precios y cantidades válidas.
+
+**RN-14 — Reserva y pago:** el carrito no reserva existencias. Cuando se confirma un pedido válido y se inicia el pago, se reserva stock temporalmente. La confirmación de venta exige pago verificado; reservas caducadas y pagos tardíos requieren conciliación para evitar sobreventas o cobros inconsistentes.
+
+**RN-15 — Estados del pedido:** pendiente de pago → confirmado → en preparación → enviado → entregado. Cancelado es una salida permitida según reglas de negocio y derechos aplicables; transiciones excepcionales y devoluciones requieren procedimiento definido. Los estados de pago son independientes.
+
+**RN-16 — Entregas:** domicilio con cobertura prevista en Colombia, sujeta a cobertura real. Datos mínimos de destinatario, teléfono, departamento, municipio y dirección; datos complementarios opcionales. Conservar los datos históricos. Sin cotización de envío válida no se habilita el pago.
+
+**RN-17 — Operación administrativa:** el administrador registra transportadora y guía, verifica entrega antes de marcar *Entregado* y no modifica artículos, cantidades ni precios de pedidos pagados. Cancelaciones solicitadas mediante contacto con la empresa.
+
+**RN-18 — Catálogo e inventario:** agotado (stock cero) visible sin compra; desactivado no visible públicamente. Reposición reactiva disponibilidad si el producto continúa publicado.
+
+**RN-19 — Reintentos de pago:** se permite reintentar sobre el mismo pedido cuando no haya pago confirmado o en proceso incompatible, siempre dentro de la validez de la reserva. Se deben impedir dobles cobros.
+
+Las reglas técnicas del vencimiento, conciliación de pagos tardíos, cancelaciones posteriores al pago y selección del proveedor siguen pendientes.
+
 ## 9. Decisiones pendientes que afectan los procesos
 
 Las siguientes cuestiones requieren definición antes de completar los diseños e implementaciones correspondientes.
@@ -1023,7 +1040,7 @@ Las referencias abreviadas `CU-006` a `CU-014` utilizadas en esta tabla correspo
 
 ### 9.1. Consideraciones específicas
 
-**Carrito de visitantes:** debe decidirse si una persona no autenticada podrá agregar productos y cómo se tratará ese contenido al iniciar sesión.
+**Carrito de visitantes:** aprobado para uso sin cuenta; el contenido se conservará y conciliará al autenticarse. Pendiente el mecanismo técnico.
 
 **Inventario:** se debe determinar cuándo se comprueban las existencias y en qué momento un pedido afecta el stock.
 
@@ -1185,6 +1202,7 @@ La documentación mantendrá una separación entre los procesos del negocio, el 
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Definición inicial de actores, procesos, casos de uso y reglas de negocio de la V1. |
 
 **Próxima revisión prevista:** durante la consolidación de la arquitectura, el modelo de datos y el diagnóstico del código actual.
