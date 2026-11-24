@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", renderCatalog);
 
 // Renderiza el catálogo
 function renderCatalog() {
-    const catalog = document.getElementById("productsCatalog");
+    const catalog = document.getElementById("products-catalog");
 
     if (!catalog) {
         return;

@@ -19,18 +19,18 @@ import { validateProductData } from "../utils/product-validation.js";
 // =============================================================
 
 // Formulario principal.
-const productForm = document.getElementById("productForm");
+const productForm = document.getElementById("product-form");
 
 // Cuerpo de la tabla.
-const productsTableBody = document.getElementById("productsTableBody");
+const productsTableBody = document.getElementById("products-table-body");
 
 // Valores del formulario
-const productId = document.getElementById("productId");
-const productName = document.getElementById("productName");
-const productCategory = document.getElementById("productCategory");
-const productPrice = document.getElementById("productPrice");
-const productStock = document.getElementById("productStock");
-const productDescription = document.getElementById("productDescription");
+const productId = document.getElementById("product-id");
+const productName = document.getElementById("product-name");
+const productCategory = document.getElementById("product-category");
+const productPrice = document.getElementById("product-price");
+const productStock = document.getElementById("product-stock");
+const productDescription = document.getElementById("product-description");
 
 
 //============================================================
@@ -38,17 +38,17 @@ const productDescription = document.getElementById("productDescription");
 //============================================================
 
 // Modal
-const modal = document.getElementById("productModal");
+const modal = document.getElementById("product-modal");
 
 // Titulo del modal
-const modalTitle = document.getElementById("modalTitle");
+const modalTitle = document.getElementById("modal-title");
 
 // Boton de confirmar Modal
-const confirmModalBtn = document.getElementById("confirmModalBtn");
+const confirmModalBtn = document.getElementById("confirm-modal-btn");
 
 // Botones para abrir y cerrar el modal
-const openModalBtn = document.getElementById("openModalBtn");
-const closeModalBtn = document.getElementById("closeModalBtn");
+const openModalBtn = document.getElementById("open-modal-btn");
+const closeModalBtn = document.getElementById("close-modal-btn");
 
 
 //============================================================
@@ -104,11 +104,11 @@ productForm.addEventListener("submit", event => {
 function saveProduct() {
 
     // Obtenemos el id oculto.
-    const existingID = productId.value;
+    const existingId = productId.value;
 
     // Creamos un objeto producto.
     const product = {
-        id: existingID || Date.now(),
+        id: existingId || Date.now(),
         name: productName.value,
         category: productCategory.value,
         price: Number(productPrice.value),
@@ -117,7 +117,7 @@ function saveProduct() {
     };
 
     // Si existe un id significa que estamos editando.
-    if (existingID) {
+    if (existingId) {
         updateProduct(product);
 
         // Mostramos notificación de éxito

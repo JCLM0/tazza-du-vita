@@ -35,7 +35,7 @@ function initializeQuickActions() {
 
 // Funcion para poner en marcha el resumen
 function initializeSummary() {
-    const productCount = document.getElementById("productCount");
+    const productCount = document.getElementById("product-bount");
 
     if (productCount) {
         productCount.textContent = getProducts().length;
@@ -43,7 +43,7 @@ function initializeSummary() {
 }
 
 // Variable del boton de Gestion de Productos
-const productsButton = document.getElementById("productsButton");
+const productsButton = document.getElementById("products-button");
 
 // Redirige a la pagina de Gestion de productos
 if (productsButton) {

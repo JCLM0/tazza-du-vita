@@ -9,13 +9,13 @@
 export function createNotificationContainer() {
 
     // Verificamos si el contenedor ya existe
-    let container = document.getElementById("notificationContainer");
+    let container = document.getElementById("notification-container");
 
     // Si no existe, lo creamos
     if (!container) {
 
         container = document.createElement("div");
-        container.id = "notificationContainer";
+        container.id = "notification-container";
 
         // Lo agregamos al final del body
         document.body.appendChild(container);

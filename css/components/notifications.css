@@ -1,5 +1,5 @@
 /* El id se le coloca al contenedor que contiene las notificaciones */
-#notificationContainer{
+#notification-container{
     position: fixed;
     top: 24px;
     right: 24px;

@@ -9,7 +9,7 @@
  * un sistema real de autenticación con backend.
  */
 
-const loginForm = document.getElementById("loginForm");
+const loginForm = document.getElementById("login-form");
 
 // Cuando el usuario envía el formulario evita que la pagina se recargue
 loginForm?.addEventListener("submit", event => {
