@@ -48,7 +48,7 @@ const confirmModalBtn = document.getElementById("confirm-modal-btn");
 
 // Botones para abrir y cerrar el modal
 const openModalBtn = document.getElementById("open-modal-btn");
-const closeModalBtn = document.getElementById("close-modal-btn");
+const closeModalBtn = document.getElementById("close-modal-bñtn");
 
 
 //============================================================
