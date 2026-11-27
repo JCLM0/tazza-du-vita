@@ -5,7 +5,7 @@
 **Versión del documento:** 1.1
 **Fecha de creación:** 23 de noviembre de 2026
 **Última actualización:** 24 de noviembre de 2026
-**Estado:** Plan inicial de implementación y verificación, pendiente de diagnóstico del código actual
+**Estado:** Plan inicial de implementación basado en el diagnóstico del repositorio, pendiente de confirmar la línea base local y establecer el backlog técnico.
 **Documentos de referencia:** 00 — Dirección del Proyecto; 01 — Requisitos y Backlog; 02 — Procesos y Casos de Uso; 03 — Arquitectura Técnica; 04 — Modelo de Datos; 05 — Diseño de Interfaces; 06 — Estándares de Desarrollo
 **Responsable de las decisiones:** Responsable del proyecto
 
@@ -86,7 +86,7 @@ No será necesario resolver todas las decisiones técnicas antes de cerrar esta 
 
 ### 3.2. Etapa 2 — Diagnóstico técnico
 
-**Estado:** Pendiente.
+**Estado:** Diagnóstico inicial realizado; comprobación de la copia local pendiente.
 
 **Objetivo:** establecer el estado real del código actualizado.
 
@@ -107,13 +107,13 @@ No será necesario resolver todas las decisiones técnicas antes de cerrar esta 
 
 ### 3.3. Etapa 3 — Definición técnica y planificación
 
-**Estado:** Pendiente.
+**Estado:** En desarrollo.
 
 **Objetivo:** resolver las decisiones que bloquean la implementación.
 
 **Actividades principales:**
 
-1. Seleccionar las tecnologías necesarias.
+1. Confirmar la configuración y dependencias de Node.js, Express y MySQL, ya aprobados para la V1.
 2. Definir los componentes principales del backend.
 3. Aprobar el modelo físico de datos.
 4. Resolver las reglas críticas de carrito, inventario y pedidos.
@@ -530,8 +530,8 @@ Se registrarán cuando su impacto justifique un seguimiento.
 |---|---|---|
 | Tiempo limitado | Funcionalidades incompletas | Priorizar alcance obligatorio |
 | Código diferente al diagnóstico anterior | Estimaciones incorrectas | Revisar repositorio actualizado |
-| Backend sin definir | Retrasos de integración | Resolver selección después del diagnóstico |
-| Reglas comerciales incompletas | Rehacer pedidos o modelo de datos | Resolver decisiones antes de implementar procesos dependientes |
+| Curva de aprendizaje e integración del backend | Retrasos, errores de seguridad o problemas de conexión | Implementar incrementos pequeños, probar la API y revisar los cambios críticos |
+| Detalles operativos pendientes | Bloqueos en reservas, entregas y pagos | Resolver las reglas técnicas y comerciales restantes antes de implementar los procesos afectados |
 | Errores de autenticación | Acceso no autorizado | Verificaciones de seguridad |
 | Inconsistencias de inventario | Pedidos inválidos | Validar operaciones y concurrencia |
 | Refactorizaciones extensas | Pérdida de tiempo o regresiones | Exigir justificación y pruebas |
@@ -594,7 +594,7 @@ Antes de integrar una modificación importante deberá comprobarse:
 2. Qué comportamiento se esperaba cambiar.
 3. Qué pruebas se ejecutaron.
 4. Qué resultados se obtuvieron.
-5. Qué riesgos permanec.
+5. Qué riesgos permanecen.
 6. Si existe alguna decisión que requiera aprobación.
 
 ### 14.3. Cambios estructurales
@@ -738,7 +738,7 @@ El seguimiento del trabajo deberá facilitar la toma de decisiones y la detecci�
 
 La calidad se comprobará mediante criterios de aceptación, pruebas y evidencias acordes con cada funcionalidad.
 
-El plan de implementación definitivo se establecerá después de revisar el código actualizado, identificar el trabajo pendiente y resolver las dependencias técnicas y comerciales necesarias.
+El plan de implementación se concretará a partir del diagnóstico inicial, la verificación de la copia local del repositorio y las decisiones técnicas restantes. Se priorizará conservar el frontend funcional, construir el backend y completar progresivamente las operaciones comerciales.
 
 Este documento servirá como referencia para organizar las actividades y verificar el avance real del proyecto hasta completar la primera versión.
 
@@ -748,7 +748,8 @@ Este documento servirá como referencia para organizar las actividades y verific
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
-| 1.0 | 23/11/2026 | Definición inicial de etapas, organización del trabajo, pruebas, defectos, riesgos, evidencias y criterios de finalización de la V1. |
+| 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** después del diagnóstico del código actual y de la definición del plan de implementación.
+**Próxima revisión prevista:** al confirmar el estado local del repositorio y establecer las primeras tareas de implementación.

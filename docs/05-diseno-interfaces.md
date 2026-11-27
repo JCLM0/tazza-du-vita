@@ -241,7 +241,7 @@ Los enlaces deberán conducir a secciones existentes y funcionales.
 
 No se mostrarán como operativas funcionalidades aplazadas.
 
-**Pendiente:** determinar si se utilizará una página de presentación independiente.
+**Decisión aprobada:** la Landing Page y Home se unificarán en index.html. Se conservará el hero de presentación y se incorporarán las secciones pertinentes de Home. pages/home.html podrá retirarse únicamente después de trasladar el contenido necesario y verificar los enlaces.
 
 ### 6.2. INT-2026-11-002 — Catálogo de productos
 
@@ -354,7 +354,7 @@ Las operaciones administrativas deberán continuar protegidas aunque alguien int
 
 ### 6.6. INT-2026-11-006 — Carrito de compras
 
-**Acceso inicial:** Cliente autenticado.
+**Acceso:** Visitante o cliente autenticado.
 
 **Objetivo:** permitir revisar y modificar los artículos seleccionados.
 
@@ -380,7 +380,7 @@ La aplicación deberá impedir cantidades inválidas y comunicar cambios de disp
 
 No se interpretará que agregar un producto al carrito reserva automáticamente inventario.
 
-**Pendiente:** comportamiento para visitantes y persistencia entre sesiones.
+**Decisión aprobada:** los visitantes pueden utilizar un carrito temporal sin registrarse. Al iniciar sesión para confirmar la compra, el contenido deberá conservarse y conciliarse con el carrito de la cuenta. Queda pendiente definir la persistencia técnica.
 
 **Referencias:** CU-2026-11-006 y CU-2026-11-007.
 
@@ -410,7 +410,7 @@ La operación no deberá considerarse exitosa hasta recibir una confirmación co
 
 Mientras se procesa una solicitud, deberá evitarse que interacciones repetidas produzcan accidentalmente operaciones duplicadas. El backend seguirá siendo responsable de garantizar la consistencia.
 
-**Pendiente:** datos de entrega, procedimientos comerciales y estados del pedido.
+**Decisiones aprobadas:** los datos mínimos de entrega y los seis estados comerciales están definidos. La interfaz deberá mostrar el costo de envío válido y el total antes del pago. Quedan pendientes las tarifas reales, el proveedor de pagos y determinados procedimientos excepcionales.
 
 **Referencia:** CU-2026-11-008.
 
@@ -718,6 +718,8 @@ La interfaz deberá comunicar cuando un producto no pueda adquirirse.
 
 La presentación visual no reemplazará las validaciones de inventario del backend.
 
+Los productos agotados deberán conservar su presencia en el catálogo público, mostrar claramente su condición y tener deshabilitadas las operaciones de compra. Los productos desactivados no deberán presentarse públicamente.
+
 ### 11.4. Datos de compra
 
 El resumen de compra deberá permitir reconocer productos, cantidades e importes.
@@ -886,7 +888,8 @@ La finalidad de esta especificación es orientar el desarrollo de una experienci
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
-| 1.0 | 23/11/2026 | Definición inicial de identidad visual, navegación, interfaces, componentes, accesibilidad y criterios de interacción de la V1. |
+| 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** después del diagnóstico del frontend actual y la resolución de las decisiones que afecten navegación, compra y administración.
+**Próxima revisión prevista:** al verificar el frontend local, unificar la página de inicio e implementar las interfaces de carrito, checkout y pedidos.

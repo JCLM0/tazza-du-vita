@@ -470,6 +470,7 @@ El propósito de esta documentación es facilitar el trabajo, mantener la cohere
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 

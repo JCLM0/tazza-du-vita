@@ -360,8 +360,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-001 — Registro de cuenta
 
-**Como** visitante,  
-**quiero** crear una cuenta,  
+**Como** visitante,
+**quiero** crear una cuenta,
 **para** acceder a las funciones disponibles para clientes registrados.
 
 **Requisito relacionado:** RF-2026-11-001.
@@ -377,8 +377,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-002 — Inicio de sesión
 
-**Como** cliente registrado,  
-**quiero** iniciar sesión,  
+**Como** cliente registrado,
+**quiero** iniciar sesión,
 **para** acceder a las funciones autorizadas de mi cuenta.
 
 **Requisito relacionado:** RF-2026-11-002.
@@ -393,8 +393,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-003 — Cierre de sesión
 
-**Como** usuario autenticado,  
-**quiero** cerrar mi sesión,  
+**Como** usuario autenticado,
+**quiero** cerrar mi sesión,
 **para** finalizar el acceso autorizado a mi cuenta desde esa sesión.
 
 **Requisito relacionado:** RF-2026-11-003.
@@ -408,8 +408,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-004 — Explorar productos
 
-**Como** visitante o cliente,  
-**quiero** consultar el catálogo,  
+**Como** visitante o cliente,
+**quiero** consultar el catálogo,
 **para** conocer los productos ofrecidos por Tazza Du Vita.
 
 **Requisitos relacionados:** RF-2026-11-005 y RF-2026-11-006.
@@ -424,9 +424,9 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-005 — Agregar productos al carrito
 
-**Como** cliente,  
-**quiero** agregar productos al carrito,  
-**para** preparar una compra.
+**Como** visitante o cliente,
+**quiero** agregar productos al carrito,
+**para** preparar una posible compra sin necesidad de iniciar sesión previamente.
 
 **Requisito relacionado:** RF-2026-11-007.
 
@@ -437,14 +437,15 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 3. La cantidad registrada corresponde a la operación aceptada.
 4. El sistema comunica si un producto no puede agregarse.
 5. No se aceptan cantidades inválidas.
+6. El visitante puede agregar productos sin autenticarse y conservar su selección al iniciar sesión, conforme a las reglas de conciliación del carrito.
 
 **Decisión vigente:** esta operación también estará disponible para visitantes, con carrito temporal y validación antes del pedido.
 
 ### HU-2026-11-006 — Modificar el carrito
 
-**Como** cliente,  
-**quiero** revisar y modificar mi carrito,  
-**para** ajustar los productos antes de realizar el pedido.
+**Como** visitante o cliente,
+**quiero** revisar y modificar mi carrito,
+**para** ajustar los productos antes de confirmar una compra.
 
 **Requisito relacionado:** RF-2026-11-007.
 
@@ -458,8 +459,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-007 — Confirmar un pedido
 
-**Como** cliente,  
-**quiero** confirmar los productos que deseo comprar,  
+**Como** cliente,
+**quiero** confirmar los productos que deseo comprar,
 **para** registrar mi pedido en Tazza Du Vita.
 
 **Requisito relacionado:** RF-2026-11-008.
@@ -479,8 +480,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-008 — Consultar mis pedidos
 
-**Como** cliente,  
-**quiero** consultar mis pedidos registrados,  
+**Como** cliente,
+**quiero** consultar mis pedidos registrados,
 **para** revisar sus detalles y conocer su estado.
 
 **Requisito relacionado:** RF-2026-11-009.
@@ -495,8 +496,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-009 — Registrar productos
 
-**Como** administrador,  
-**quiero** registrar nuevos productos,  
+**Como** administrador,
+**quiero** registrar nuevos productos,
 **para** incorporarlos al catálogo de Tazza Du Vita.
 
 **Requisito relacionado:** RF-2026-11-010.
@@ -512,8 +513,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-010 — Modificar productos
 
-**Como** administrador,  
-**quiero** editar la información de los productos,  
+**Como** administrador,
+**quiero** editar la información de los productos,
 **para** mantener actualizado el catálogo.
 
 **Requisito relacionado:** RF-2026-11-010.
@@ -529,8 +530,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-011 — Retirar productos de la oferta
 
-**Como** administrador,  
-**quiero** retirar productos del catálogo,  
+**Como** administrador,
+**quiero** retirar productos del catálogo,
 **para** evitar ofrecer artículos que ya no deben comercializarse.
 
 **Requisito relacionado:** RF-2026-11-010.
@@ -547,8 +548,8 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 
 ### HU-2026-11-012 — Administrar pedidos
 
-**Como** administrador,  
-**quiero** consultar y actualizar los pedidos,  
+**Como** administrador,
+**quiero** consultar y actualizar los pedidos,
 **para** realizar su seguimiento y gestión.
 
 **Requisito relacionado:** RF-2026-11-011.
@@ -562,12 +563,12 @@ Los criterios expresan condiciones esperadas y no constituyen evidencia de prueb
 5. No se modifican indebidamente los datos históricos de la compra.
 6. Un usuario sin permisos administrativos no puede realizar estas operaciones.
 
-**Pendiente:** definir los estados y transiciones permitidos.
+**Decisión aprobada:** los estados comerciales serán pendiente de pago, confirmado, en preparación, enviado, entregado y cancelado. Quedan pendientes las transiciones excepcionales, devoluciones y condiciones específicas de cancelación.
 
 ### HU-2026-11-013 — Realizar un pago en línea
 
-**Como** cliente,  
-**quiero** pagar mi pedido mediante un servicio de pagos,  
+**Como** cliente,
+**quiero** pagar mi pedido mediante un servicio de pagos,
 **para** completar la operación utilizando un método electrónico.
 
 **Requisito relacionado:** RF-2026-11-012.
@@ -664,7 +665,7 @@ Estos estados son independientes de la clasificación de alcance.
 
 No se asignarán puntos de historia ni tiempos de desarrollo hasta revisar el código actualizado.
 
-Después del diagnóstico se podrá utilizar un sistema de estimación proporcional a las necesidades del proyecto.
+A partir del diagnóstico inicial y de la verificación del repositorio vigente se podrá utilizar un sistema de estimación proporcional a las necesidades del proyecto.
 
 Las estimaciones deberán considerar:
 
@@ -830,7 +831,7 @@ Este documento establece la especificación funcional inicial de Tazza Du Vita p
 
 Su propósito es mantener una relación clara entre las necesidades de los usuarios, las capacidades del sistema y las condiciones necesarias para comprobar su cumplimiento.
 
-El backlog será revisado después del diagnóstico del código actual. Esto permitirá identificar qué funcionalidades pueden conservarse, cuáles necesitan correcciones y cuáles requieren desarrollo nuevo.
+El backlog se ajustará utilizando el diagnóstico inicial disponible y la verificación de la copia local del repositorio. Se distinguirán las funcionalidades ya implementadas, las parcialmente desarrolladas y las que requieren implementación nueva.
 
 Las decisiones técnicas todavía abiertas no deberán resolverse mediante suposiciones ni mediante la adopción automática de diseños históricos.
 
@@ -842,7 +843,8 @@ La documentación y la implementación deberán evolucionar de forma coordinada,
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
 | 1.0 | 23/11/2026 | Especificación inicial de requisitos, historias de usuario, criterios de aceptación y backlog de la V1. |
 
-**Próxima revisión prevista:** después del diagnóstico del código actual y conforme se resuelvan las decisiones pendientes que afecten el comportamiento de las funcionalidades.
+**Próxima revisión prevista:** al establecer el backlog técnico de implementación y verificar las funcionalidades existentes.

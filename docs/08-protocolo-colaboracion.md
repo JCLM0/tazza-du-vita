@@ -769,7 +769,7 @@ No deberá declararse una tarea completada si únicamente se ha formulado una pr
 
 El protocolo comenzará a aplicarse durante la revisión del código actualizado y la posterior incorporación de colaboradores técnicos.
 
-Antes de asignar actividades de implementación se deberá:
+Antes de asignar la primera actividad de implementación a Claude, y considerando que ya existe un diagnóstico inicial, se deberá verificar la copia local vigente, confirmar los cambios recientes y establecer una línea base reproducible.gi
 
 1. Revisar el repositorio vigente.
 2. Confirmar sus tecnologías y estructura.
@@ -917,7 +917,8 @@ Este protocolo busca facilitar el trabajo y proteger la continuidad del proyecto
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
-| 1.0 | 23/11/2026 | Definición inicial de responsabilidades, colaboración, asignación de tareas, autorizaciones, revisión, integración y gestión de cambios. |
+| 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** después de aplicar el protocolo en una primera tarea técnica y evaluar su funcionamiento.
+**Próxima revisión prevista:** después de verificar la copia local del repositorio y concretar el backlog técnico, los contratos API y las reglas pendientes de implementación.

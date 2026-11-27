@@ -462,7 +462,7 @@ Se informa que la operación no se completó.
 
 El carrito y su resumen representan los cambios válidos que fueron aceptados.
 
-**Pendiente:** definir cuándo se actualizan los precios del carrito y cómo se resuelven cambios de precio antes de confirmar un pedido.
+**Regla vigente:** el carrito muestra valores informativos. Antes de confirmar el pedido, el backend debe verificar los precios y las existencias vigentes. Si encuentra diferencias relevantes, el cliente deberá revisar y aceptar el resumen actualizado.
 
 ### CU-2026-11-008 — Confirmar y registrar pedido
 
@@ -535,7 +535,7 @@ El pedido no se considera pagado por el simple hecho de haber sido creado.
 
 **Pendientes relacionados:** PEN-2026-11-004, PEN-2026-11-005 y PEN-2026-11-006.
 
-El tratamiento posterior del carrito, la reserva o reducción del inventario y el procedimiento de entrega se definirán antes de completar la implementación.
+El carrito no reserva existencias. Cuando se inicia el pago de un pedido válido, se aplica una reserva temporal, cuya duración y mecanismo técnico están pendientes. La venta se consolida únicamente después de verificar el pago. La entrega será a domicilio, sujeta a cobertura y cotización válida. Si no se incorpora una pasarela en la V1, deberá definirse un procedimiento alternativo seguro para registrar y atender pedidos.
 
 ### CU-2026-11-009 — Consultar mis pedidos
 
@@ -785,7 +785,7 @@ El sistema rechaza la operación.
 
 Los cambios permitidos quedan registrados y el pedido mantiene un estado coherente.
 
-**Pendiente:** establecer los estados y las transiciones autorizadas.
+**Estados aprobados:** pendiente de pago, confirmado, en preparación, enviado, entregado y cancelado. La secuencia ordinaria está definida; quedan pendientes las transiciones excepcionales, devoluciones y procedimientos especiales de cancelación.
 
 ### CU-2026-11-014 — Realizar pago en línea
 
@@ -1042,13 +1042,13 @@ Las referencias abreviadas `CU-006` a `CU-014` utilizadas en esta tabla correspo
 
 **Carrito de visitantes:** aprobado para uso sin cuenta; el contenido se conservará y conciliará al autenticarse. Pendiente el mecanismo técnico.
 
-**Inventario:** se debe determinar cuándo se comprueban las existencias y en qué momento un pedido afecta el stock.
+**Inventario:** la reserva temporal está aprobada. Faltan su duración, el mecanismo de concurrencia y la conciliación de pagos tardíos.
 
-**Pedidos:** se deben establecer estados comerciales y transiciones válidas, sin confundirlos con los estados financieros.
+**Pedidos:** los seis estados comerciales están aprobados. Faltan las reglas de transición excepcionales.
 
-**Entregas:** se debe definir qué datos necesita el negocio para atender un pedido y si existirán modalidades de entrega diferenciadas.
+**Entregas:** están aprobados el domicilio y los datos mínimos. Faltan transportadoras, tarifas reales y cobertura efectiva.
 
-**Productos:** debe aprobarse una política de retiro o desactivación que preserve las referencias históricas.
+**Productos:** los agotados permanecerán visibles sin permitir compras. Los desactivados dejarán de mostrarse en el catálogo público. Falta concretar la implementación física de esta diferencia.
 
 **Pagos:** si la integración se incorpora, deben documentarse los resultados posibles y las operaciones de verificación.
 
@@ -1073,11 +1073,14 @@ El diagrama oficial deberá representar:
 - Explorar catálogo.
 - Consultar producto.
 
+**Casos compartidos por visitantes y clientes:**
+
+- Agregar producto al carrito.
+- Consultar y modificar carrito.
+
 **Casos del cliente:**
 
 - Cerrar sesión.
-- Agregar producto al carrito.
-- Consultar y modificar carrito.
 - Confirmar pedido.
 - Consultar pedidos propios.
 
@@ -1202,7 +1205,8 @@ La documentación mantendrá una separación entre los procesos del negocio, el 
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
-| 1.0 | 23/11/2026 | Definición inicial de actores, procesos, casos de uso y reglas de negocio de la V1. |
+| 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** durante la consolidación de la arquitectura, el modelo de datos y el diagnóstico del código actual.
+**Próxima revisión prevista:** después de verificar la copia local del repositorio y concretar el backlog técnico, los contratos API y las reglas pendientes de implementación.

@@ -73,7 +73,7 @@ No se considerará correcto un cambio únicamente porque el código pueda ejecut
 
 ### 3.1. Idioma del código
 
-Se propone utilizar inglés para los identificadores técnicos del código.
+Se utilizará inglés para los identificadores técnicos del código nuevo, conforme a las convenciones ratificadas para Tazza Du Vita.
 
 Ejemplos:
 
@@ -84,8 +84,6 @@ const totalPrice = 0;
 function validateLogin() {}
 function calculateTotal() {}
 ```
-
-Los textos visibles para los usuarios permanecerán en español, salvo que se apruebe otro comportamiento.
 
 La adopción definitiva de esta convención dependerá del análisis del código existente.
 
@@ -152,7 +150,7 @@ Se utilizarán clases cuando permitan organizar adecuadamente un comportamiento 
 
 ### 3.5. Archivos y carpetas
 
-Se propone utilizar `kebab-case` para los nombres de archivos y carpetas propios del proyecto.
+Se utilizará `kebab-case` para los nombres de archivos y carpetas propios del proyecto.
 
 Ejemplos:
 
@@ -169,7 +167,7 @@ No se renombrarán archivos existentes sin comprobar sus dependencias.
 
 ### 3.6. Identificadores HTML y clases CSS
 
-Se propone utilizar nombres descriptivos en `kebab-case`.
+Se utilizará nombres descriptivos en `kebab-case`.
 
 ```html
 <section class="product-list">
@@ -477,6 +475,7 @@ Se propone una estrategia sencilla:
 | Rama | Propósito |
 |---|---|
 | `main` | Mantener una versión estable |
+| `develop` | Integración de cambios durante el desarrollo |
 | `feature/...` | Desarrollo de funcionalidades |
 | `fix/...` | Correcciones específicas |
 
@@ -490,7 +489,7 @@ fix/product-validation
 
 La estrategia definitiva se establecerá después de revisar la estructura y el historial del repositorio.
 
-No se incorporará obligatoriamente una rama `develop` si no existe una necesidad clara.
+Se conservará inicialmente la rama develop existente. Su utilización definitiva se comprobará al revisar el estado actual del repositorio. No se crearán ramas adicionales sin una necesidad concreta.
 
 ### 9.3. Commits
 
@@ -709,15 +708,15 @@ Las siguientes cuestiones deberán revisarse durante el diagnóstico del código
 
 | Asunto | Estado |
 |---|---|
-| Idioma predominante de identificadores | Propuesta: inglés |
-| Convención definitiva de archivos | Propuesta: kebab-case |
+| Idioma predominante de identificadores | Inglés aprobado para identificadores técnicos |
+| Convención definitiva de archivos | kebab-case ratificado |
 | Organización de módulos y carpetas | Pendiente |
 | Estrategia de ramas | Propuesta simplificada |
 | Convención de commits | Propuesta |
 | Formateador y herramientas de análisis estático | Pendiente |
-| Framework o entorno de pruebas | Por verificar |
-| Convenciones del backend | Pendiente de tecnología |
-| Convenciones del modelo físico de datos | Pendiente |
+| Framework o entorno de pruebas | Revisar herramientas existentes y definir pruebas del backend |
+| Convenciones del backend | Node.js + Express aprobados; detalles pendientes |
+| Convenciones del modelo físico de datos | MySQL aprobado; nomenclatura pendiente |
 | Automatización de pruebas | Por verificar |
 
 Las decisiones pendientes no impedirán continuar con la documentación.
@@ -782,7 +781,8 @@ Estos estándares servirán como referencia común para el trabajo de programaci
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
-| 1.0 | 23/11/2026 | Definición inicial de convenciones, prácticas de programación, seguridad, control de versiones, pruebas y revisión de cambios. |
+| 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** después del diagnóstico del código actual y de la selección de las tecnologías principales.
+**Próxima revisión prevista:** al configurar el backend Node.js + Express, establecer las herramientas de calidad y verificar la organización del repositorio.

@@ -87,9 +87,9 @@ LocalStorage permitía realizar pruebas de persistencia en el navegador, pero no
 
 No existe evidencia suficiente para afirmar que la versión actual del proyecto conserva exactamente estas características.
 
-### 3.3. Pendiente de verificación
+### 3.3. Verificación de la copia clocal
 
-El diagnóstico del código actualizado deberá identificar:
+Aunque existe un diagnóstico inicial del repositorio, deberá comprobarse la versión local vigente antes de realizar modificaciones estructurales. Esta verificación permitirá confirmar las correcciones recientes y detectar diferencias respecto al código previamente analizado.
 
 1. Estructura real de carpetas y módulos.
 2. Dependencias existentes.
@@ -278,7 +278,7 @@ Responsable de:
 - Consulta del contenido.
 - Preparación del resumen de compra.
 
-La persistencia del carrito y su comportamiento para visitantes continúan pendientes de definición.
+El carrito estará disponible tanto para visitantes como para clientes autenticados. Los visitantes dispondrán de un carrito temporal que deberá conservarse y conciliarse con el de la cuenta al autenticarse. La estrategia concreta de almacenamiento y sincronización sigue pendiente de diseño.
 
 ### 6.4. Pedidos
 
@@ -315,7 +315,7 @@ Se propone utilizar solicitudes web mediante HTTPS para comunicar el navegador c
 
 La interfaz enviará solicitudes y recibirá respuestas que permitan representar los resultados de las operaciones.
 
-El formato de intercambio y el diseño específico de la API se definirán cuando se seleccione la tecnología de backend.
+Se utilizará Node.js con Express para desarrollar el backend y se propone una API REST con intercambio de datos JSON. Los endpoints, contratos de solicitud y respuesta, controles de acceso y mecanismos de manejo de errores se definirán durante el diseño de la API.
 
 JSON es una alternativa apropiada para intercambiar información estructurada, pero no se establecerán todavía contratos definitivos.
 
@@ -589,7 +589,7 @@ El Documento 00 registra como pendientes:
 - PEN-2026-11-007 — Alojamiento y despliegue.
 - PEN-2026-11-008 — Pagos en línea.
 
-Las decisiones que resuelvan estos asuntos deberán registrarse antes de actualizar la arquitectura como aprobada.
+Las decisiones DEC-2026-11-010 y DEC-2026-11-011 establecen Node.js con Express y MySQL como tecnologías principales de la V1. Los asuntos PEN-2026-11-001 y PEN-2026-11-002 permanecen parcialmente resueltos porque todavía deben definirse la estructura del backend, la integración con MySQL y el esquema físico.
 
 ### 12.5. Decisiones técnicas posteriores al diagnóstico
 
@@ -720,13 +720,11 @@ No se considerará validado un componente únicamente por estar documentado.
 
 **Evaluación:** no se recomienda decidir una reescritura sin revisar antes el estado real del código.
 
-### 15.4. Seleccionar una tecnología de backend antes del diagnóstico
+### 15.4. Riesgo de implementar el backend sin verificar la integración
 
-**Ventaja:** permitiría comenzar rápidamente la configuración de un entorno.
+**Riesgo:** aunque las tecnologías principales están seleccionadas, una integración apresurada puede introducir incompatibilidades, dependencias innecesarias o modificaciones evitables del frontend.
 
-**Riesgo:** podría generar incompatibilidades, dependencias innecesarias o cambios evitables.
-
-**Evaluación:** conviene completar primero el diagnóstico y luego comparar alternativas concretas.
+**Evaluación:** verificar la copia local y comenzar con un backend modular mínimo, incorporando progresivamente la persistencia y los servicios necesarios.
 
 ### 15.5. Implementar pagos antes del flujo básico de pedidos
 
@@ -811,7 +809,7 @@ Se propone una aplicación web modular, con responsabilidades separadas entre pr
 
 Esta orientación busca facilitar la seguridad, la integridad de los datos, las pruebas y la evolución del proyecto sin introducir complejidad innecesaria.
 
-La selección definitiva de tecnologías y la organización concreta de los componentes se realizarán después del diagnóstico del código actualizado.
+Las tecnologías principales de la V1 ya están seleccionadas. El siguiente trabajo consistirá en verificar la copia local, concretar la estructura del backend y diseñar los contratos de API, la autenticación y las operaciones de persistencia.
 
 El propósito de la arquitectura no será imponer una estructura teórica, sino orientar decisiones que permitan construir, verificar y mantener el sistema de manera coherente con sus necesidades reales.
 
@@ -821,7 +819,8 @@ El propósito de la arquitectura no será imponer una estructura teórica, sino 
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
-| 1.0 | 23/11/2026 | Definición inicial de principios, arquitectura lógica, responsabilidades, seguridad, persistencia y criterios técnicos de la V1. |
+| 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** precisar los contratos API, la autenticación, el esquema de datos y la política de reservas para Node.js + Express y MySQL.
+**Próxima revisión prevista:** después de verificar la copia local del repositorio y concretar el backlog técnico, los contratos API y las reglas pendientes de implementación.

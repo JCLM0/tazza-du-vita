@@ -149,7 +149,9 @@ Representa los artículos comercializados por Tazza Du Vita.
 - Retirar un producto de la oferta no implicará necesariamente eliminarlo de la base de datos.
 - Modificar su precio no deberá alterar pedidos históricos.
 
-**Pendientes:** categorías, múltiples imágenes, identificadores comerciales, tratamiento de agotados y política definitiva de inventario.
+**Decisión aprobada:** los productos agotados permanecerán visibles sin permitir su compra y los productos desactivados no aparecerán en el catálogo público.
+
+Pendientes: categorías, múltiples imágenes, identificadores comerciales y mecanismo físico para gestionar reservas y existencias.
 
 ### 4.3. Carrito
 
@@ -213,7 +215,9 @@ El total podrá necesitar otros componentes, como descuentos o costos de entrega
 - Los cambios de estado deberán respetar transiciones autorizadas.
 - Registrar un pedido no implica que esté pagado.
 
-**Pendientes:** estados definitivos, datos de entrega, impuestos aplicables, costos adicionales y comportamiento ante cancelaciones.
+**Decisiones aprobadas:** seis estados comerciales, datos mínimos de entrega, conservación histórica de la compra y restricción de modificaciones sobre pedidos pagados.
+
+**Pendientes:** detalle de impuestos y obligaciones aplicables, transportadoras, tarifas reales, transiciones excepcionales, cancelaciones posteriores al pago y tratamiento de reembolsos.
 
 ### 4.6. DetallePedido
 
@@ -416,31 +420,43 @@ La composición exacta del total dependerá de las decisiones sobre descuentos, 
 
 El inventario es una de las áreas que requieren mayor precisión antes de implementar la base de datos.
 
-### 8.1. Existencias disponibles
+### 8.1. Existencias y disponibilidad
 
-El atributo `stock` representa inicialmente una cantidad de existencias.
+El sistema deberá distinguir las existencias físicas, las unidades reservadas temporalmente y las unidades disponibles para nuevas compras.
 
-Sin embargo, todavía no se ha definido si corresponderá a unidades físicas, unidades disponibles para venta o cantidades después de reservas.
+La forma de representar estos valores en MySQL se definirá durante el diseño físico.
+
+La disponibilidad no podrá ser negativa ni permitir comprometer una misma unidad para varios pedidos simultáneamente.
 
 ### 8.2. Carrito e inventario
 
-Agregar productos al carrito no deberá interpretarse automáticamente como una reducción definitiva del stock.
+Agregar un producto al carrito no reserva ni descuenta existencias.
 
-La reserva de existencias necesitará una regla de negocio aprobada.
+Las cantidades deberán comprobarse nuevamente antes de registrar una operación comercial.
 
-### 8.3. Confirmación de pedidos
+Un producto sin unidades disponibles continuará visible como «Agotado», siempre que esté publicado.
 
-El sistema deberá comprobar nuevamente la disponibilidad antes de confirmar una operación.
+### 8.3. Reservas temporales
 
-Cuando varios usuarios intenten adquirir las mismas existencias, el backend y la persistencia deberán impedir que las operaciones aceptadas produzcan cantidades inconsistentes.
+Cuando se inicia el pago de un pedido válido, el sistema deberá reservar temporalmente las unidades correspondientes.
 
-### 8.4. Cancelaciones
+Las operaciones de reserva deberán controlar la concurrencia para impedir sobreventas.
 
-La devolución de existencias ante cancelaciones dependerá del momento en que se descuenten o reserven los productos.
+La duración, estructura de almacenamiento y mecanismos de expiración se definirán antes de implementar el proceso.
 
-No se establecerá una regla automática hasta definir el proceso comercial.
+### 8.4. Confirmación, cancelaciones y pagos tardíos
+
+Cuando se verifique la aprobación del pago, las unidades reservadas se consolidarán como vendidas.
+
+Si el pago se rechaza o vence el plazo correspondiente, la liberación deberá realizarse de manera segura.
+
+El sistema tendrá que considerar confirmaciones tardías y notificaciones duplicadas antes de liberar existencias o modificar definitivamente un pedido.
+
+Las devoluciones y cancelaciones de pedidos pagados deberán seguir las reglas comerciales aprobadas y los procedimientos que se definan.
 
 **Referencia pendiente:** PEN-2026-11-005.
+
+La operación sin pasarela de pagos requiere definir un procedimiento alternativo antes de implementar la gestión definitiva del inventario.
 
 ## 9. Estados de pedidos y pagos
 
@@ -468,7 +484,7 @@ Las transiciones se definirán en el Documento 02 y se implementarán mediante v
 
 ### 10.1. Entregas
 
-La confirmación de pedidos podría requerir datos como destinatario, dirección, ciudad, teléfono de contacto y observaciones.
+Los datos obligatorios de entrega serán nombre del destinatario, teléfono, departamento, municipio y dirección. El barrio, las instrucciones adicionales y el segundo teléfono serán opcionales. Se utilizará el correo de la cuenta del cliente. El pedido conservará una instantánea histórica de la información necesaria para su entrega.
 
 Se aprobó la entrega a domicilio con cobertura comercial prevista en Colombia, sujeta a la disponibilidad real de las transportadoras; no habrá recogida presencial como opción en la V1.
 
@@ -575,7 +591,7 @@ Las relaciones definitivas deberán conservar la trazabilidad con los procesos d
 
 | Referencia | Asunto | Consecuencia principal |
 |---|---|---|
-| PEN-2026-11-002 | Motor de base de datos | Determina tipos, restricciones y SQL |
+| PEN-2026-11-002 | Esquema físico MySQL | Definir tipos, restricciones, índices, migraciones y transacciones
 | PEN-2026-11-003 | Carrito de visitantes | Afecta propiedad y persistencia |
 | PEN-2026-11-004 | Estados y datos de pedidos | Afecta atributos y validaciones |
 | PEN-2026-11-005 | Inventario | Afecta disponibilidad y transacciones |
@@ -647,7 +663,8 @@ El objetivo no es reproducir automáticamente el SQL histórico, sino construir 
 
 | Versión | Fecha | Descripción |
 |---|---|---|
+| 1.2 | 27/11/2026 | Correciones de consistencia documental
 | 1.1 | 24/11/2026 | Actualización tras el diagnóstico del repositorio y acuerdos sobre tecnologías, navegación y proceso comercial. |
-| 1.0 | 23/11/2026 | Consolidación inicial del modelo conceptual y lógico de datos, entidades, relaciones, restricciones y decisiones pendientes de la V1. |
+| 1.0 | 23/11/2026 | Creación del documento rector a partir de la revisión documental y las decisiones iniciales de alcance. |
 
-**Próxima revisión prevista:** diseñar y validar el esquema físico MySQL, los detalles de reserva de inventario y la persistencia del carrito de visitante.
+**Próxima revisión prevista:** después de verificar la copia local del repositorio y concretar el backlog técnico, los contratos API y las reglas pendientes de implementación.
